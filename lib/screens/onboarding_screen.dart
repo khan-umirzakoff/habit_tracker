@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../theme/app_colors.dart';
-import 'dashboard_screen.dart';
+import 'empty_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -56,7 +56,7 @@ class OnboardingScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushReplacement(
-           MaterialPageRoute(builder: (_) => const DashboardScreen()),
+           MaterialPageRoute(builder: (_) => const EmptyScreen()),
         );
       },
       child: Container(
