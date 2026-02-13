@@ -2,12 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
+import 'home_screen.dart';
 
 /// Figma "empty" page — node 178:5570
 /// Figma frame: 390×844, fill: #333333
 /// Pixel-perfect: barcha o'lchamlar Figma qiymatlaridan olingan
-class EmptyScreen extends StatelessWidget {
+class EmptyScreen extends StatefulWidget {
   const EmptyScreen({super.key});
+
+  @override
+  State<EmptyScreen> createState() => _EmptyScreenState();
+}
+
+class _EmptyScreenState extends State<EmptyScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // 3 sekunddan keyin HomeScreen ga o'tish
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +175,7 @@ class EmptyScreen extends StatelessWidget {
 
           // === BOTTOM NAV BAR ===
           // Figma: x:87, y:755, w:216, h:60
-          _buildBottomNavBar(scale),
+          _buildBottomNavBar(context, scale),
 
           // Bottom padding: 844 - 815 = 29
           SizedBox(height: 29 * scale),
@@ -288,7 +307,7 @@ class EmptyScreen extends StatelessWidget {
   /// Bottom Navigation Bar
   /// Figma: layout_84CDO6: w:216, h:60
   /// Background pill: layout_HS8RNS: 216×60, fill_MXDWZC #222222, borderRadius:1000
-  Widget _buildBottomNavBar(double scale) {
+  Widget _buildBottomNavBar(BuildContext context, double scale) {
     return SizedBox(
       width: 216 * scale,
       height: 60 * scale,
@@ -341,18 +360,25 @@ class EmptyScreen extends StatelessWidget {
           Positioned(
             left: 106 * scale,
             top: 4 * scale,
-            child: Container(
-              width: 52 * scale,
-              height: 52 * scale,
-              decoration: BoxDecoration(
-                color: AppColors.textPrimary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(1000),
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/plus_icon.svg',
-                  width: 24 * scale,
-                  height: 24 * scale,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => const HomeScreen()),
+                );
+              },
+              child: Container(
+                width: 52 * scale,
+                height: 52 * scale,
+                decoration: BoxDecoration(
+                  color: AppColors.textPrimary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/icons/plus_icon.svg',
+                    width: 24 * scale,
+                    height: 24 * scale,
+                  ),
                 ),
               ),
             ),
