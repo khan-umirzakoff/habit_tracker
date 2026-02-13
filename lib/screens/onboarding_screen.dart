@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
+import 'main_screen.dart';
 import 'empty_screen.dart';
 
 /// Figma "3-page" — node 178:2433
@@ -85,7 +86,7 @@ class OnboardingScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const EmptyScreen()),
+          MaterialPageRoute(builder: (_) => const MainScreen()),
         );
       },
       child: Container(

@@ -204,14 +204,6 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          // === FIXED BOTTOM NAV ===
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 29 * scale,
-            child: Center(child: _buildBottomNavBar(scale)),
-          ),
         ],
       ),
     );
@@ -698,110 +690,6 @@ class HomeScreen extends StatelessWidget {
             ),
           );
         }).toList(),
-      ),
-    );
-  }
-
-  // ===========================
-  // BOTTOM NAV BAR (216×60)
-  // ===========================
-  Widget _buildBottomNavBar(double scale) {
-    return SizedBox(
-      width: 216 * scale,
-      height: 60 * scale,
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(1000),
-            ),
-          ),
-          // Home (active)
-          Positioned(
-            left: 4 * scale,
-            top: 4 * scale,
-            child: Container(
-              width: 100 * scale,
-              height: 52 * scale,
-              decoration: BoxDecoration(
-                color: AppColors.textPrimary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(1000),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/home_icon.svg',
-                    width: 24 * scale,
-                    height: 24 * scale,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.textPrimary,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  SizedBox(width: 4 * scale),
-                  Text(
-                    'Home',
-                    style: GoogleFonts.inter(
-                      fontSize: 15 * scale,
-                      fontWeight: FontWeight.w500,
-                      height: 1.193,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          // Plus
-          Positioned(
-            left: 106 * scale,
-            top: 4 * scale,
-            child: Container(
-              width: 52 * scale,
-              height: 52 * scale,
-              decoration: BoxDecoration(
-                color: AppColors.textPrimary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(1000),
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/plus_icon.svg',
-                  width: 24 * scale,
-                  height: 24 * scale,
-                ),
-              ),
-            ),
-          ),
-          // Calendar
-          Positioned(
-            left: 160 * scale,
-            top: 4 * scale,
-            child: Container(
-              width: 52 * scale,
-              height: 52 * scale,
-              decoration: BoxDecoration(
-                color: AppColors.textPrimary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(1000),
-              ),
-              child: Center(
-                child: Opacity(
-                  opacity: 0.4,
-                  child: SvgPicture.asset(
-                    'assets/icons/calendar_icon.svg',
-                    width: 24 * scale,
-                    height: 24 * scale,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.textPrimary,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
