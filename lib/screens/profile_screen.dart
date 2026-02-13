@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
-import 'dart:math' as math;
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -16,15 +15,19 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Background Pattern
+          // Background Pattern (Figma 178:2835) - Restored and Brightened
           Positioned(
             top: 0,
             left: 0,
             right: 0,
-            child: SvgPicture.asset(
-              'assets/images/profile_header_pattern.svg',
-              width: screenWidth,
-              fit: BoxFit.fitWidth,
+            height: 240 * scale,
+            child: Opacity(
+              opacity: 0.15, // Reduced from 0.4 to fix "too bright" issue
+              child: SvgPicture.asset(
+                'assets/images/profile_header_pattern_v2.svg',
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
             ),
           ),
           // Main Content
@@ -52,9 +55,9 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Gap to reach Name (Figma Top: 140). Current: 60+64 = 124. Gap = 16.
+                        // Gap to reach Name (Figma Top: 140).
                         SizedBox(height: 16 * scale),
-                        // Name (Figma Top: 140, Height: 20)
+                        // Name
                         Text(
                           "Abbos Janizakov",
                           style: GoogleFonts.inter(
@@ -63,9 +66,9 @@ class ProfileScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        // Gap to reach Email (Figma Top: 161). Current: 140+20 = 160. Gap = 1.
+                        // Gap to reach Email
                         SizedBox(height: 1 * scale),
-                        // Email (Figma Top: 161, Height: 17)
+                        // Email
                         Text(
                           "abbosjanizakov@gmail.com",
                           style: GoogleFonts.tinos(
@@ -75,13 +78,13 @@ class ProfileScreen extends StatelessWidget {
                             color: const Color(0xFF9BDA88),
                           ),
                         ),
-                        // Gap to reach Logout (Figma Top: 185). Current: 161+17 = 178. Gap = 7.
+                        // Gap to reach Logout
                         SizedBox(height: 7 * scale),
-                        // Logout Button (Figma Top: 185, Height: 42)
+                        // Logout Button
                         _buildLogoutButton(scale),
-                        // Gap to reach Menu (Figma Top: 262). Current: 185+42 = 227. Gap = 35.
+                        // Gap to reach Menu
                         SizedBox(height: 35 * scale),
-                        // Menu (Figma Top: 262, Height: 232)
+                        // Menu
                         _ProfileMenuWidget(scale: scale),
                         SizedBox(height: 50 * scale), // Bottom padding
                       ],
@@ -107,31 +110,31 @@ class ProfileScreen extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-             left: 3 * scale,
-             top: 3 * scale,
-             child: Container(
-               width: 98 * scale,
-               height: 36 * scale,
-               decoration: BoxDecoration(
-                 color: const Color(0xFF333333),
-                 borderRadius: BorderRadius.circular(100 * scale),
-               ),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                    Icon(Icons.logout, color: Colors.white, size: 16 * scale),
-                    SizedBox(width: 4 * scale),
-                    Text(
-                      "Chiqish",
-                      style: GoogleFonts.inter(
-                        fontSize: 15 * scale,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
+            left: 3 * scale,
+            top: 3 * scale,
+            child: Container(
+              width: 98 * scale,
+              height: 36 * scale,
+              decoration: BoxDecoration(
+                color: const Color(0xFF333333),
+                borderRadius: BorderRadius.circular(100 * scale),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.logout, color: Colors.white, size: 16 * scale),
+                  SizedBox(width: 4 * scale),
+                  Text(
+                    "Chiqish",
+                    style: GoogleFonts.inter(
+                      fontSize: 15 * scale,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
                     ),
-                 ],
-               ),
-             ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -155,23 +158,23 @@ class ProfileScreen extends StatelessWidget {
               'assets/icons/arrow_back_icon.svg',
               width: 24 * scale,
               height: 24 * scale,
-               colorFilter: const ColorFilter.mode(
-                  Colors.white,
-                  BlendMode.srcIn,
-               ),
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
             ),
           ),
           SizedBox(width: 12 * scale),
           Text(
-             "Profile",
-             style: GoogleFonts.inter(
-                fontSize: 17 * scale,
-                fontWeight: FontWeight.w600,
-                height: 1.193,
-                color: const Color(0xFFDBD8D3),
-             ),
-           ),
-           Spacer(),
+            "Profile",
+            style: GoogleFonts.inter(
+              fontSize: 17 * scale,
+              fontWeight: FontWeight.w600,
+              height: 1.193,
+              color: const Color(0xFFDBD8D3),
+            ),
+          ),
+          Spacer(),
         ],
       ),
     );
@@ -192,12 +195,12 @@ class _ProfileMenuWidget extends StatelessWidget {
         color: const Color(0xFF222222),
         borderRadius: BorderRadius.circular(22 * scale),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.05),
+          color: Colors.white.withOpacity(0.05),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
+            color: Colors.black.withOpacity(0.25),
             blurRadius: 10,
             offset: const Offset(0, 4),
           )
@@ -223,18 +226,18 @@ class _ProfileMenuWidget extends StatelessWidget {
       width: double.infinity,
       height: 52 * scale,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(18 * scale),
       ),
       alignment: Alignment.center,
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: GoogleFonts.inter( 
+        style: GoogleFonts.inter(
           fontSize: 17 * scale,
           fontWeight: FontWeight.w400,
           height: 1.193,
-          color: Colors.white.withValues(alpha: 0.7),
+          color: Colors.white.withOpacity(0.7),
         ),
       ),
     );
