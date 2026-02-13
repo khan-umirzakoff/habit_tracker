@@ -49,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(height: 16 * scale),
                         // Name
                         Text(
-                          "Abbos Janizakov",
+                          "Abdulbosit Umirzoqov", // Updated name
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
                             fontSize: 17 * scale,
@@ -61,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(height: 1 * scale),
                         // Email
                         Text(
-                          "abbosjanizakov@gmail.com",
+                          "khanumirzakoff@gmail.com", // Updated email
                           textAlign: TextAlign.center,
                           style: GoogleFonts.tinos(
                             fontSize: 15 * scale,
