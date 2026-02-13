@@ -23,15 +23,23 @@ class EmptyScreen extends StatelessWidget {
           // Figma: Status Bar - iPhone, layout_LP0A4B: h:44
           SizedBox(height: MediaQuery.of(context).padding.top),
 
-          // === HEADER AREA with gradient ===
-          // Figma: y:103 (bu status bar + header gap)
-          // Gap between status bar and date nav: 103 - 44 = 59
-          SizedBox(height: 59 * scale),
+          // === HEADER DECORATION ===
+          // Figma: Node 178-5851, x:120.5, y:60, w:147, h:64
+          // Gap from status bar (y=44) to header (y=60) = 16
+          SizedBox(height: 16 * scale),
+
+          SvgPicture.asset(
+            'assets/images/checkmark_ornament.svg',
+            width: 147 * scale,
+            height: 64 * scale,
+          ),
 
           // === DATE NAVIGATION BAR ===
-          // Figma: Group 1000004732 → Group 1000004730
-          // layout_Q97QMO: x:55, w:278, h:60
-          // Inner: Frame 2087327709, layout_DZNE34: row, gap:4px
+          // Figma: Group at y:103, h:111. Inner buttons at y:154 (103+51), h:60
+          // Header decoration ends at y=124. Date nav inner starts at y=154.
+          // Gap = 154 - 124 = 30
+          SizedBox(height: 30 * scale),
+
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 55 * scale),
             child: SizedBox(
@@ -40,14 +48,12 @@ class EmptyScreen extends StatelessWidget {
             ),
           ),
 
-          // === HEADER SECTION ===
-          // Figma: Frame 2087327716, layout_EUEQEQ
-          // y:230, header starts at 230. Date nav ends at 103+111=214. Gap: 230-214=16
+          // === CONTENT COLUMN (text + stats + illustration) ===
+          // Figma: y:230. Date nav ends at y=214. Gap = 16
           SizedBox(height: 16 * scale),
 
           // "All Schelduled for Today"
-          // Figma: layout_P9VWOM, textAlign: CENTER
-          // style_YJNKX6: w400, 15px, opacity: 0.4
+          // Figma: w:230, style: w400, 15px, opacity: 0.4, textAlign: CENTER
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 79 * scale),
             child: SizedBox(
@@ -63,14 +69,12 @@ class EmptyScreen extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 12 * scale), // gap: 12
+          SizedBox(height: 12 * scale), // column gap: 12
 
           // === STATS ROW ===
-          // Figma: Frame 2087327713, layout_HZREDV: row, gap:4
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Notification bell — layout_YAF845: 24×24, fill_SX8GVK: #FFBB00
               SvgPicture.asset(
                 'assets/icons/notification_bell.svg',
                 width: 24 * scale,
@@ -81,7 +85,6 @@ class EmptyScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 4 * scale),
-              // "0 Habits" badge — layout_KLJ82O: 74×32, fill_MXDWZC: #222222, borderRadius: 30px
               Container(
                 width: 74 * scale,
                 height: 32 * scale,
@@ -97,7 +100,6 @@ class EmptyScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 4 * scale),
-              // "~%" — style_3I33CO: w600, 15px, letterSpacing: -4%
               Text(
                 '~%',
                 style: AppTextStyles.percentText.copyWith(fontSize: 15 * scale),
@@ -105,66 +107,59 @@ class EmptyScreen extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: 12 * scale),
+          SizedBox(height: 12 * scale), // column gap: 12
 
           // === EMPTY ILLUSTRATION ===
-          // Figma: Group 1000004723, layout_DHPC7A: w:230, h:62
+          // Figma: w:230, h:62
           SvgPicture.asset(
             'assets/images/empty_illustration.svg',
             width: 230 * scale,
             height: 62 * scale,
           ),
 
-          // === SPACER TO PUSH CONTENT DOWN ===
-          const Spacer(),
+          // === DECORATIVE WAVE ===
+          // Figma: Node 178-5991, x:145, y:399, w:100, h:100
+          // Content ends ~y=366. Gap = 399 - 366 = 33
+          SizedBox(height: 33 * scale),
 
-          // === CHECKMARK ORNAMENT ===
-          // Figma: Group 48100458, layout_F7J6S5: w:147, h:64
           SvgPicture.asset(
-            'assets/images/checkmark_ornament.svg',
-            width: 147 * scale,
-            height: 64 * scale,
+            'assets/images/decorative_wave.svg',
+            width: 100 * scale,
+            height: 100 * scale,
           ),
-
-          SizedBox(height: 20 * scale),
-
-          // === AVATAR (Mask group) ===
-          // Figma: layout_SVFB2H: w:100, h:100
-          ClipOval(
-            child: Image.asset(
-              'assets/images/avatar.png',
-              width: 100 * scale,
-              height: 100 * scale,
-              fit: BoxFit.cover,
-            ),
-          ),
-
-          SizedBox(height: 12 * scale),
 
           // === MOTIVATIONAL TEXT ===
-          // Figma: layout_YXUKPB: x:38, w:314
-          // style_BOE4LX: w400, 12px, lineHeight: 1.417, textAlign: CENTER
-          // opacity: 0.2
+          // Figma: x:38, y:510, w:314, h:51
+          // Wave ends at y=499. Gap = 510 - 499 = 11
+          SizedBox(height: 11 * scale),
+
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 38 * scale),
-            child: Text(
-              "Hayotingizni o'zgartrishni istasangiz odatlaringizni boshqarishni o'rganing. Xozirda sizda birorta ham Habbit kiritilmagan!",
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                fontSize: 12 * scale,
-                color: AppColors.textPrimary.withValues(alpha: 0.2),
+            child: SizedBox(
+              width: 314 * scale,
+              height: 51 * scale,
+              child: Text(
+                "Hayotingizni o'zgartrishni istasangiz odatlaringizni boshqarishni o'rganing. Xozirda sizda birorta ham Habbit kiritilmagan!",
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(
+                  fontSize: 12 * scale,
+                  color: AppColors.textPrimary.withValues(alpha: 0.2),
+                ),
               ),
             ),
           ),
 
+          // === GAP TO BOTTOM NAV ===
+          // Figma: Text ends at y=561. Bottom nav at y=755. Gap = 194
+          // Use Spacer to fill remaining space (adapts to screen height)
           const Spacer(),
 
           // === BOTTOM NAV BAR ===
-          // Figma: Group 1000004729, layout_84CDO6: w:216, h:60
+          // Figma: x:87, y:755, w:216, h:60
           _buildBottomNavBar(scale),
 
-          // Bottom padding
-          SizedBox(height: 29 * scale), // 844 - 755 - 60 = 29 (bottom gap)
+          // Bottom padding: 844 - 815 = 29
+          SizedBox(height: 29 * scale),
         ],
       ),
     );
