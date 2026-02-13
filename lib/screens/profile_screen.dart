@@ -14,39 +14,122 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(context, scale),
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 100 * scale,
-                      height: 100 * scale,
-                      decoration: const BoxDecoration(
-                        color: AppColors.surface,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(Icons.person, size: 50 * scale, color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 16 * scale),
-                    Text(
-                      "Profile",
-                      style: GoogleFonts.inter(
-                        fontSize: 24 * scale,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+      body: Stack(
+        children: [
+          // Background Pattern
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SvgPicture.asset(
+              'assets/images/profile_header_pattern.svg',
+              width: screenWidth,
+              fit: BoxFit.fitWidth,
             ),
-          ],
-        ),
+          ),
+          // Main Content
+          SafeArea(
+            child: Column(
+              children: [
+                _buildHeader(context, scale),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                         // Avatar
+                        Container(
+                          width: 100 * scale,
+                          height: 100 * scale,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: AppColors.textPrimary,
+                              width: 2 * scale,
+                            ),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/mask_group_avatar.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16 * scale),
+                        // Name
+                        Text(
+                          "Abbos Janizakov",
+                          style: GoogleFonts.inter( // SF Pro Display alternative
+                            fontSize: 24 * scale,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        SizedBox(height: 4 * scale),
+                        // Email
+                        Text(
+                          "abbosjanizakov@gmail.com",
+                          style: GoogleFonts.tinos( // Times New Roman alternative
+                            fontSize: 16 * scale,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textPrimary.withValues(alpha: 0.5),
+                          ),
+                        ),
+                        SizedBox(height: 30 * scale),
+                        // Menu
+                        _ProfileMenuWidget(scale: scale),
+                        SizedBox(height: 30 * scale),
+                        // Logout Button
+                        _buildLogoutButton(scale),
+                         SizedBox(height: 50 * scale), // Bottom padding
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLogoutButton(double scale) {
+    return Container(
+      width: 104 * scale,
+      height: 42 * scale,
+      decoration: BoxDecoration(
+        color: const Color(0xFF222222),
+        borderRadius: BorderRadius.circular(100 * scale),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+             left: 3 * scale,
+             top: 3 * scale,
+             child: Container(
+               width: 98 * scale,
+               height: 36 * scale,
+               decoration: BoxDecoration(
+                 color: const Color(0xFF333333),
+                 borderRadius: BorderRadius.circular(100 * scale),
+               ),
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                    Icon(Icons.logout, color: Colors.white, size: 16 * scale),
+                    SizedBox(width: 4 * scale),
+                    Text(
+                      "Chiqish",
+                      style: GoogleFonts.inter(
+                        fontSize: 15 * scale,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
+                    ),
+                 ],
+               ),
+             ),
+          ),
+        ],
       ),
     );
   }
@@ -55,14 +138,8 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 60 * scale,
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        border: Border(
-           bottom: BorderSide(
-             color: Colors.white.withValues(alpha: 0.05),
-             width: 1,
-           ),
-        ),
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,6 +169,69 @@ class ProfileScreen extends StatelessWidget {
            ),
            Spacer(),
         ],
+      ),
+    );
+  }
+}
+
+class _ProfileMenuWidget extends StatelessWidget {
+  final double scale;
+
+  const _ProfileMenuWidget({required this.scale});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300 * scale,
+      padding: EdgeInsets.all(5 * scale),
+      decoration: BoxDecoration(
+        color: const Color(0xFF222222),
+        borderRadius: BorderRadius.circular(22 * scale),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.05),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.25),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildMenuItem("Barcha Habbitlarim", scale),
+          SizedBox(height: 4 * scale),
+          _buildMenuItem("Eng sara ko’rsatkichlar", scale),
+          SizedBox(height: 4 * scale),
+          _buildMenuItem("Eng yomon ko’rsatkichlar", scale),
+          SizedBox(height: 4 * scale),
+          _buildMenuItem("Habbit qo’shish", scale),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMenuItem(String text, double scale) {
+    return Container(
+      width: double.infinity,
+      height: 52 * scale,
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(18 * scale),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: GoogleFonts.inter( 
+          fontSize: 17 * scale,
+          fontWeight: FontWeight.w400,
+          height: 1.193,
+          color: Colors.white.withValues(alpha: 0.7),
+        ),
       ),
     );
   }
