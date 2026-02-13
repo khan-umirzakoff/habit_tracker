@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                               width: 2 * scale,
                             ),
                             image: const DecorationImage(
-                              image: AssetImage('assets/images/mask_group_avatar.png'),
+                              image: AssetImage('assets/images/avatar.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -58,9 +58,9 @@ class ProfileScreen extends StatelessWidget {
                         Text(
                           "Abbos Janizakov",
                           style: GoogleFonts.inter( // SF Pro Display alternative
-                            fontSize: 24 * scale,
+                            fontSize: 17 * scale,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
+                            color: Colors.white,
                           ),
                         ),
                         SizedBox(height: 4 * scale),
@@ -68,9 +68,10 @@ class ProfileScreen extends StatelessWidget {
                         Text(
                           "abbosjanizakov@gmail.com",
                           style: GoogleFonts.tinos( // Times New Roman alternative
-                            fontSize: 16 * scale,
+                            fontSize: 15 * scale,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.textPrimary.withValues(alpha: 0.5),
+                            fontStyle: FontStyle.italic,
+                            color: const Color(0xFF9BDA88),
                           ),
                         ),
                         SizedBox(height: 30 * scale),
