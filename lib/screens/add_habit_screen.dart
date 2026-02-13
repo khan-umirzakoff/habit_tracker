@@ -53,6 +53,11 @@ class AddHabitScreen extends StatelessWidget {
 
                       // 5. Icon Type Section (178:2516)
                       _buildIconTypeSection(scale),
+
+                      SizedBox(height: 30 * scale),
+
+                      // 6. Action Buttons (178:2535)
+                      _buildActionButtons(scale),
                       
                       SizedBox(height: 40 * scale), // Bottom padding
                     ],
@@ -499,6 +504,88 @@ class AddHabitScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  // ===========================================================================
+  // 6. ACTION BUTTONS
+  // Figma: 178:2535 — Frame 2087327726
+  // Layout: Row, gap 3px. Items: Cancel (Red), Save (Green).
+  // ===========================================================================
+  Widget _buildActionButtons(double scale) {
+    return Row(
+      children: [
+        // Cancel Button
+        Expanded(
+          child: _buildDoubleLayerButton(
+            scale: scale,
+            text: "Bekor qilish",
+            color: const Color(0xFFCA5555), // fill_NX0EFA
+            onTap: () {
+              // Handle cancel
+            },
+          ),
+        ),
+        SizedBox(width: 3 * scale), // Gap 3px
+        // Save Button
+        Expanded(
+          child: _buildDoubleLayerButton(
+            scale: scale,
+            text: "Saqlash",
+            color: const Color(0xFF9BDA88), // fill_X9FZEO
+            onTap: () {
+              // Handle save
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDoubleLayerButton({
+    required double scale, 
+    required String text, 
+    required Color color,
+    VoidCallback? onTap,
+  }) {
+    // Outer: 177x60, Radius 18, Opacity 0.1
+    // Inner: 169x52, Radius 14, Solid Color, Margin 4
+    
+    // We use a Container for Outer, and Child Container for Inner
+    // Since width is Expanded, we focus on height and logic.
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 60 * scale,
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(18 * scale),
+        ),
+        padding: EdgeInsets.all(4 * scale), // Creates the gap for inner button
+        child: Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(14 * scale),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            style: GoogleFonts.inter( // SF Pro Display
+              fontSize: 17 * scale,
+              fontWeight: FontWeight.w500,
+              height: 1.193,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  offset: const Offset(0, 1),
+                  blurRadius: 1,
+                  color: Colors.black.withValues(alpha: 0.45),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
