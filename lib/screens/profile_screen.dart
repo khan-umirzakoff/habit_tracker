@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            height: 240 * scale,
+            height: 300 * scale,
             child: Opacity(
               opacity: 0.15, // Reduced from 0.4 to fix "too bright" issue
               child: SvgPicture.asset(
