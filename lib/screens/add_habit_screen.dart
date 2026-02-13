@@ -48,6 +48,11 @@ class AddHabitScreen extends StatelessWidget {
                       
                       // 4. Color Palette Section (178:2497)
                       _buildColorPaletteSection(scale),
+
+                      SizedBox(height: 20 * scale),
+
+                      // 5. Icon Type Section (178:2516)
+                      _buildIconTypeSection(scale),
                       
                       SizedBox(height: 40 * scale), // Bottom padding
                     ],
@@ -384,6 +389,109 @@ class AddHabitScreen extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ===========================================================================
+  // 5. ICON TYPE SECTION
+  // Figma: 178:2516 — Frame 2087327723
+  // ===========================================================================
+  Widget _buildIconTypeSection(double scale) {
+    // Icons ordered by Figma coordinates (Row 1 then Row 2)
+    // Row 1 (y=0): Professional, Music, Like, Flashlight, Discover, Language, Fashion
+    // Row 2 (y=54): Camera, Youtube, Sport, Invite, App, Transport
+    final icons = [
+      'professional', 'music', 'like', 'flashlight', 
+      'discover', 'language', 'fashion',
+      'camera', 'youtube', 'sport', 'invite', 'app', 'transport'
+    ];
+    
+    // Mock active index
+    int activeIndex = 0;
+
+    return Column(
+      children: [
+        // Label button: "Ikon turlari"
+        // 178:2517 — 104x50
+        NeumorphicInputContainer(
+          width: 104 * scale,
+          height: 50 * scale,
+          borderRadius: 66 * scale,
+          pressedColor: const Color(0xFF333333),
+          shadowColorTop: const Color(0x8CFFFFFF),
+          shadowColorBottom: const Color(0x73000000),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8 * scale),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "Ikon turlari",
+                  style: GoogleFonts.inter(
+                    fontSize: 15 * scale,
+                    fontWeight: FontWeight.w600,
+                    height: 1.193,
+                    letterSpacing: -0.5,
+                    color: const Color(0xFFDBD8D3).withValues(alpha: 0.6),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        SizedBox(height: 20 * scale),
+
+        // Icons Grid
+        // Figma Frame: 360x90. 
+        // Row 1 y=0. Row 2 y=54.
+        // Item size 36x36.
+        // Horizontal step 54px.
+        SizedBox(
+          width: 360 * scale,
+          height: 90 * scale, // 54 + 36 = 90
+          child: Stack(
+            children: icons.asMap().entries.map((entry) {
+              final i = entry.key;
+              final iconName = entry.value;
+              final isActive = i == activeIndex;
+              
+              // Calculate Position
+              double x = 0;
+              double y = 0;
+              
+              if (i < 7) {
+                // Row 1
+                x = i * 54.0;
+                y = 0;
+              } else {
+                // Row 2
+                x = (i - 7) * 54.0;
+                y = 54.0;
+              }
+
+              return Positioned(
+                left: x * scale,
+                top: y * scale,
+                child: Container(
+                  width: 36 * scale,
+                  height: 36 * scale,
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset(
+                    'assets/icons/${iconName}_icon.svg',
+                    width: 24 * scale, // Icons inside are usually 24x24
+                    height: 24 * scale,
+                    colorFilter: ColorFilter.mode(
+                      isActive ? const Color(0xFF9BDA88) : const Color(0xFF7F7F7F),
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               );
