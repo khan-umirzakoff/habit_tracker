@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import '../widgets/habit_card.dart';
 import '../data/habit_mock_data.dart';
 import 'dart:math' as math;
+import 'profile_screen.dart';
 
 /// Figma "1-page" — node 178:3013
 /// Frame: 390×1860 (scrollable), fill: #333333
@@ -28,10 +29,33 @@ class HomeScreen extends StatelessWidget {
 
                 // === HEADER DECORATION ===
                 SizedBox(height: 16 * scale),
-                SvgPicture.asset(
-                  'assets/images/checkmark_ornament.svg',
-                  width: 147 * scale,
-                  height: 64 * scale,
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/checkmark_ornament.svg',
+                      width: 147 * scale,
+                      height: 64 * scale,
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ProfileScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 70 * scale,
+                          height: 64 * scale,
+                          color: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
 
                 // === DATE NAVIGATION ===
