@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 12 * scale),
 
-                // Stats row
+// Stat Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 4 * scale),
                     Text(
-                      '82%',
+                      '83%',
                       style: GoogleFonts.inter(
                         fontSize: 15 * scale,
                         fontWeight: FontWeight.w600,
@@ -129,11 +129,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 12 * scale),
 
-                // Weekly bar
-                SvgPicture.asset(
-                  'assets/images/empty_illustration.svg',
-                  width: 230 * scale,
-                  height: 62 * scale,
+                // Weekly bar - Dynamic Progress
+                _HomeProgressBar(
+                  percentage: 0.83,
+                  scale: scale,
                 ),
 
                 // === HABIT CARDS ===
@@ -309,15 +308,57 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  // ===========================
-  // HABIT CARD
-  // Figma parent: column, gap:8, alignItems:center, fill width
-  // Card Group 178:3030: 356×155, mode:none (absolute)
-  //   - Rectangle bg: 356×155, #444 opacity 0.43, radius 22
-  //   - Content Frame: x:20, y:38, w:317, h:97, column, gap:12
-  //   - Date Frame: x:20, y:0 (positioned below card in group)
-  // Then: weekday labels 321×16
-  // Then: calendar grid (wrap, gap:1, cells 50×50)
-  // ===========================
+class _HomeProgressBar extends StatelessWidget {
+  final double percentage;
+  final double scale;
+
+  const _HomeProgressBar({
+    required this.percentage,
+    required this.scale,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 230 * scale,
+      height: 62 * scale,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          // Background Glow SVG (we keep the visual context)
+          Opacity(
+            opacity: 0.6,
+            child: SvgPicture.asset(
+              'assets/images/empty_illustration.svg',
+              width: 230 * scale,
+              height: 62 * scale,
+            ),
+          ),
+          // Dynamic Progress Line (Overriding the static parts of SVG)
+          Container(
+            width: 230 * scale,
+            height: 2 * scale,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(1 * scale),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: (230 * percentage) * scale,
+                  height: 2 * scale,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF9BDA88),
+                    borderRadius: BorderRadius.circular(1 * scale),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
