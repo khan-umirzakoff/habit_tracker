@@ -6,7 +6,7 @@ import '../widgets/habit_card.dart';
 import 'dart:math' as math;
 
 class SingleHabitScreen extends StatelessWidget {
-  // Habit Name for Header
+  // Habit Name (Description) for Header
   final String habitName;
 
   // HabitCard Parameters
@@ -100,28 +100,28 @@ class SingleHabitScreen extends StatelessWidget {
            ),
         ),
       ),
-      child: Stack(
-        alignment: Alignment.centerLeft,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Positioned(
-            left: 16 * scale,
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: SvgPicture.asset(
-                'assets/icons/arrow_back_icon.svg',
-                width: 24 * scale,
-                height: 24 * scale,
-                 colorFilter: const ColorFilter.mode(
-                    Colors.white,
-                    BlendMode.srcIn,
-                 ),
-              ),
+          SizedBox(width: 16 * scale),
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: SvgPicture.asset(
+              'assets/icons/arrow_back_icon.svg',
+              width: 24 * scale,
+              height: 24 * scale,
+               colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+               ),
             ),
           ),
-          Positioned(
-             left: 52 * scale,
-             child: Text(
+          SizedBox(width: 12 * scale),
+          Expanded(
+            child: Text(
                habitName,
+               maxLines: 1,
+               overflow: TextOverflow.ellipsis,
                style: GoogleFonts.inter(
                   fontSize: 17 * scale,
                   fontWeight: FontWeight.w600,
@@ -130,6 +130,7 @@ class SingleHabitScreen extends StatelessWidget {
                ),
              ),
           ),
+          SizedBox(width: 16 * scale),
         ],
       ),
     );

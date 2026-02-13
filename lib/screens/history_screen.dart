@@ -34,7 +34,7 @@ class HistoryScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => SingleHabitScreen(
-                      habitName: "Yugurish",
+                      habitName: "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
                       description: "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
                       percentText: '67%',
                       percentColor: const Color(0xFFFEBB64),
@@ -83,7 +83,7 @@ class HistoryScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => SingleHabitScreen(
-                      habitName: "Kitob o'qish",
+                      habitName: "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
                       description: "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
                       percentText: '44%',
                       percentColor: const Color(0xFFD2D2D2),
@@ -132,7 +132,7 @@ class HistoryScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => SingleHabitScreen(
-                      habitName: "Kod yozish",
+                      habitName: "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
                       description: "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
                       percentText: '57%',
                       percentColor: const Color(0xFFCB5B84),
