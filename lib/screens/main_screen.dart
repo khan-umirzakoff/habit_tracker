@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/animated_bottom_nav_bar.dart';
 import 'home_screen.dart';
 import 'add_habit_screen.dart';
-import 'empty_screen.dart'; // Using EmptyScreen as placeholder for Calendar for now? Or just a placeholder Container.
+import 'history_screen.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,11 +15,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const AddHabitScreen(),
-    const Scaffold(body: Center(child: Text("History/Calendar"))), // Placeholder
-  ];
+
 
   void _onTabTapped(int index) {
     setState(() {
@@ -48,7 +45,11 @@ class _MainScreenState extends State<MainScreen> {
           // Screens
           IndexedStack(
             index: _currentIndex,
-            children: _screens,
+            children: [
+              const HomeScreen(),
+              const AddHabitScreen(),
+              HistoryScreen(onBack: () => _onTabTapped(0)),
+            ],
           ),
 
           // Floating Bottom Nav Bar
