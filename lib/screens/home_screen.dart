@@ -327,34 +327,38 @@ class _HomeProgressBar extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          // Background Glow SVG (we keep the visual context)
+          // Background Glow PNG from Figma (node 178:3023)
           Opacity(
-            opacity: 0.6,
-            child: SvgPicture.asset(
-              'assets/images/empty_illustration.svg',
+            opacity: 0.8,
+            child: Image.asset(
+              'assets/images/home_progress_glow_v2.png',
               width: 230 * scale,
-              height: 62 * scale,
+              height: 60 * scale,
+              fit: BoxFit.contain,
             ),
           ),
-          // Dynamic Progress Line (Overriding the static parts of SVG)
-          Container(
-            width: 230 * scale,
-            height: 2 * scale,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(1 * scale),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: (230 * percentage) * scale,
-                  height: 2 * scale,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF9BDA88),
-                    borderRadius: BorderRadius.circular(1 * scale),
+          // Dynamic Progress Line
+          Positioned(
+            top: 0,
+            child: Container(
+              width: 230 * scale,
+              height: 2 * scale,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(1 * scale),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: (230 * percentage) * scale,
+                    height: 2 * scale,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF9BDA88),
+                      borderRadius: BorderRadius.circular(1 * scale),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
