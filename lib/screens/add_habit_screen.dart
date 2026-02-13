@@ -44,6 +44,11 @@ class AddHabitScreen extends StatelessWidget {
                       // 3. Date Range Section
                       _buildDateRangeSection(scale),
                       
+                      SizedBox(height: 20 * scale),
+                      
+                      // 4. Color Palette Section (178:2497)
+                      _buildColorPaletteSection(scale),
+                      
                       SizedBox(height: 40 * scale), // Bottom padding
                     ],
                   ),
@@ -277,6 +282,115 @@ class AddHabitScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  // ===========================================================================
+  // 4. COLOR PALETTE SECTION
+  // Figma: 178:2497 — Frame 2087327724
+  // Layout: column, alignItems: center, gap: 20px
+  // ===========================================================================
+  Widget _buildColorPaletteSection(double scale) {
+    // Color data from Figma
+    // Each color: { fill, strokeColor, strokeWidth, isActive }
+    final colors = [
+      {'fill': const Color(0xFF9BDA88), 'stroke': const Color(0xFF9BDA88), 'strokeWidth': 3.0, 'active': true},
+      {'fill': const Color(0xFFFEBB64), 'stroke': const Color(0xFF454545), 'strokeWidth': 2.0, 'active': false},
+      {'fill': const Color(0xFFCA5555), 'stroke': const Color(0xFF454545), 'strokeWidth': 2.0, 'active': false},
+      {'fill': const Color(0xFF88ADDA), 'stroke': const Color(0xFF454545), 'strokeWidth': 2.0, 'active': false},
+      {'fill': const Color(0xFFD2D2D2), 'stroke': const Color(0xFF454545), 'strokeWidth': 2.0, 'active': false},
+      {'fill': const Color(0xFFB488DA), 'stroke': const Color(0xFF454545), 'strokeWidth': 2.0, 'active': false},
+      {'fill': const Color(0xFFCB5B84), 'stroke': const Color(0xFF454545), 'strokeWidth': 2.0, 'active': false},
+    ];
+
+    return Column(
+      children: [
+        // Label button: "Ranglar to'plami"
+        // 178:2498 — 140x50, borderRadius 66
+        NeumorphicInputContainer(
+          width: 140 * scale,
+          height: 50 * scale,
+          borderRadius: 66 * scale,
+          pressedColor: const Color(0xFF333333),
+          shadowColorTop: const Color(0x8CFFFFFF), // 0.55 opacity matches Figma
+          shadowColorBottom: const Color(0x73000000), // 0.45 matches Figma
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8 * scale), // Minimal padding to avoid edge clipping
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "Ranglar to'plami",
+                  style: GoogleFonts.inter(
+                    fontSize: 15 * scale,
+                    fontWeight: FontWeight.w600,
+                    height: 1.193,
+                    letterSpacing: -0.5, // Tighten text to mimic SF Pro compactness
+                    color: const Color(0xFFDBD8D3).withValues(alpha: 0.6),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        SizedBox(height: 20 * scale), // gap: 20px
+
+        // Color circles row: 350x44
+        SizedBox(
+          width: 350 * scale,
+          height: 44 * scale,
+          child: Stack(
+            children: colors.asMap().entries.map((entry) {
+              final i = entry.key;
+              final c = entry.value;
+              final fill = c['fill'] as Color;
+              final stroke = c['stroke'] as Color;
+              final sw = c['strokeWidth'] as double;
+              final isActive = c['active'] as bool;
+
+              // Figma x positions: 0, 51, 102, 153, 204, 255, 306
+              final xPositions = [0.0, 51.0, 102.0, 153.0, 204.0, 255.0, 306.0];
+              final x = xPositions[i];
+
+              return Positioned(
+                left: x * scale,
+                top: 0,
+                child: SizedBox(
+                  width: 44 * scale,
+                  height: 44 * scale,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Outer ring (stroke circle)
+                      Container(
+                        width: 44 * scale,
+                        height: 44 * scale,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: stroke,
+                            width: sw * scale,
+                          ),
+                        ),
+                      ),
+                      // Inner filled circle (28x28)
+                      Container(
+                        width: 28 * scale,
+                        height: 28 * scale,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: fill,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
     );
   }
 }
