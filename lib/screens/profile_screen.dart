@@ -39,27 +39,18 @@ class ProfileScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        // Avatar (Figma Top: 60, Height: 64)
-                        Container(
-                          width: 64 * scale,
+                        // Avatar Section - Dumbbell shape (Figma 178:2956)
+                        SvgPicture.asset(
+                          'assets/images/avatar_frame_connected.svg',
+                          width: 147 * scale,
                           height: 64 * scale,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.textPrimary,
-                              width: 2 * scale,
-                            ),
-                            image: const DecorationImage(
-                              image: AssetImage('assets/images/avatar.png'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
                         ),
                         // Gap to reach Name (Figma Top: 140).
                         SizedBox(height: 16 * scale),
                         // Name
                         Text(
                           "Abbos Janizakov",
+                          textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
                             fontSize: 17 * scale,
                             fontWeight: FontWeight.w600,
@@ -71,6 +62,7 @@ class ProfileScreen extends StatelessWidget {
                         // Email
                         Text(
                           "abbosjanizakov@gmail.com",
+                          textAlign: TextAlign.center,
                           style: GoogleFonts.tinos(
                             fontSize: 15 * scale,
                             fontWeight: FontWeight.w400,
