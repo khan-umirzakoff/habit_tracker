@@ -11,18 +11,56 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
   @override
   void initState() {
     super.initState();
-    // Simulate loading delay
+
+    // 1. Setup Animation Controller (2 seconds duration for "slow appearance")
+    _controller = AnimationController(
+         vsync: this,
+         duration: const Duration(seconds: 2),
+       );
+
+    // 2. Define Animations
+    // Fade from 0 to 1
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    );
+
+    // Scale from 0.8 to 1.0 (subtle zoom in)
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    );
+
+    // 3. Start Animation
+    _controller.forward();
+
+    // 4. Navigate after animation completion + delay
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const OnboardingScreen(),
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+            transitionDuration: const Duration(milliseconds: 800),
+          ),
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -30,10 +68,15 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Center(
-        child: SvgPicture.asset(
-          'assets/images/loading_illustration.svg',
-          // Assuming the SVG is self-contained with colors, but we can apply filters if needed based on Figma.
-          // Figma "2-page" shows a complex illustration "Group 1000004760".
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: ScaleTransition(
+            scale: _scaleAnimation,
+            child: SvgPicture.asset(
+              'assets/images/loading_illustration.svg',
+              // Add width if needed, e.g., width: 200,
+            ),
+          ),
         ),
       ),
     );
