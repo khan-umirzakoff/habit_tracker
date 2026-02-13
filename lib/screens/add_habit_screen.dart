@@ -486,8 +486,8 @@ class AddHabitScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
                     'assets/icons/${iconName}_icon.svg',
-                    width: 24 * scale, // Icons inside are usually 24x24
-                    height: 24 * scale,
+                    width: 32 * scale, // Increased from 24 to 32 as per user request
+                    height: 32 * scale,
                     colorFilter: ColorFilter.mode(
                       isActive ? const Color(0xFF9BDA88) : const Color(0xFF7F7F7F),
                       BlendMode.srcIn,
