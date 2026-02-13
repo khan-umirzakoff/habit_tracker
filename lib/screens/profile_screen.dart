@@ -35,12 +35,11 @@ class ProfileScreen extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         // Avatar
+                        // Avatar (Figma Top: 60, Height: 64)
                         Container(
-                          width: 100 * scale,
-                          height: 100 * scale,
+                          width: 64 * scale,
+                          height: 64 * scale,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -53,34 +52,38 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        // Gap to reach Name (Figma Top: 140). Current: 60+64 = 124. Gap = 16.
                         SizedBox(height: 16 * scale),
-                        // Name
+                        // Name (Figma Top: 140, Height: 20)
                         Text(
                           "Abbos Janizakov",
-                          style: GoogleFonts.inter( // SF Pro Display alternative
+                          style: GoogleFonts.inter(
                             fontSize: 17 * scale,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 4 * scale),
-                        // Email
+                        // Gap to reach Email (Figma Top: 161). Current: 140+20 = 160. Gap = 1.
+                        SizedBox(height: 1 * scale),
+                        // Email (Figma Top: 161, Height: 17)
                         Text(
                           "abbosjanizakov@gmail.com",
-                          style: GoogleFonts.tinos( // Times New Roman alternative
+                          style: GoogleFonts.tinos(
                             fontSize: 15 * scale,
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.italic,
                             color: const Color(0xFF9BDA88),
                           ),
                         ),
-                        SizedBox(height: 30 * scale),
-                        // Menu
-                        _ProfileMenuWidget(scale: scale),
-                        SizedBox(height: 30 * scale),
-                        // Logout Button
+                        // Gap to reach Logout (Figma Top: 185). Current: 161+17 = 178. Gap = 7.
+                        SizedBox(height: 7 * scale),
+                        // Logout Button (Figma Top: 185, Height: 42)
                         _buildLogoutButton(scale),
-                         SizedBox(height: 50 * scale), // Bottom padding
+                        // Gap to reach Menu (Figma Top: 262). Current: 185+42 = 227. Gap = 35.
+                        SizedBox(height: 35 * scale),
+                        // Menu (Figma Top: 262, Height: 232)
+                        _ProfileMenuWidget(scale: scale),
+                        SizedBox(height: 50 * scale), // Bottom padding
                       ],
                     ),
                   ),
