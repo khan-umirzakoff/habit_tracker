@@ -247,9 +247,11 @@ class _ProfileMenuWidget extends StatelessWidget {
             text: "Barcha Habbitlarim",
             scale: scale,
             onTap: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const HistoryScreen()));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const HistoryScreen(showBackButton: true),
+                ),
+              );
             },
           ),
           SizedBox(height: 4 * scale),
@@ -284,9 +286,11 @@ class _ProfileMenuWidget extends StatelessWidget {
             text: "Habbit qo’shish",
             scale: scale,
             onTap: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const AddHabitScreen()));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const AddHabitScreen(showBackButton: true),
+                ),
+              );
             },
           ),
         ],

@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../widgets/neumorphic_input.dart';
 
 class AddHabitScreen extends StatefulWidget {
-  const AddHabitScreen({super.key});
+  final bool showBackButton;
+
+  const AddHabitScreen({super.key, this.showBackButton = false});
 
   @override
   State<AddHabitScreen> createState() => _AddHabitScreenState();
@@ -223,16 +225,36 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
           ),
         ),
       ),
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 52 * scale),
-      child: Text(
-        "Habbit qo’shish",
-        style: GoogleFonts.inter(
-          fontSize: 17 * scale,
-          fontWeight: FontWeight.w600,
-          height: 1.193,
-          color: const Color(0xFFDBD8D3),
-        ),
+      child: Row(
+        children: [
+          if (widget.showBackButton)
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => Navigator.pop(context),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16 * scale),
+                child: SvgPicture.asset(
+                  'assets/icons/arrow_back_icon.svg',
+                  width: 24 * scale,
+                  height: 24 * scale,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
+          if (!widget.showBackButton) SizedBox(width: 52 * scale),
+          Text(
+            "Habbit qo’shish",
+            style: GoogleFonts.inter(
+              fontSize: 17 * scale,
+              fontWeight: FontWeight.w600,
+              height: 1.193,
+              color: const Color(0xFFDBD8D3),
+            ),
+          ),
+        ],
       ),
     );
   }
