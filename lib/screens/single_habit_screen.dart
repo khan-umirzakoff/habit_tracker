@@ -103,20 +103,23 @@ class SingleHabitScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16 * scale),
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: SvgPicture.asset(
-              'assets/icons/arrow_back_icon.svg',
-              width: 24 * scale,
-              height: 24 * scale,
-               colorFilter: const ColorFilter.mode(
-                  Colors.white,
-                  BlendMode.srcIn,
-               ),
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16 * scale, vertical: 10 * scale),
+              child: SvgPicture.asset(
+                'assets/icons/arrow_back_icon.svg',
+                width: 24 * scale,
+                height: 24 * scale,
+                 colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                 ),
+              ),
             ),
           ),
-          SizedBox(width: 12 * scale),
+          SizedBox(width: 2 * scale),
           Expanded(
             child: Text(
                habitName,

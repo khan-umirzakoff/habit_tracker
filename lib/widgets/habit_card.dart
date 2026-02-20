@@ -288,44 +288,31 @@ class HabitCard extends StatelessWidget {
   // DATE BADGE (70×28)
   // ===========================
   Widget _buildDateBadge({required double scale, required String text}) {
-    return SizedBox(
-      width: 70 * scale,
-      height: 28 * scale,
-      child: Stack(
-        children: [
-          // Badge shape
-          Container(
-            width: 70 * scale,
-            height: 28 * scale,
-            decoration: BoxDecoration(
-              color: const Color(0xFF444444),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16 * scale),
-                bottomRight: Radius.circular(7 * scale),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 2),
-                  blurRadius: 4,
-                  color: Colors.black.withValues(alpha: 0.15),
-                ),
-              ],
-            ),
-          ),
-          // Text centered
-          Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                fontSize: 13 * scale,
-                fontWeight: FontWeight.w400,
-                height: 1.193,
-                color: AppColors.textPrimary.withValues(alpha: 0.6),
-              ),
-            ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10 * scale, vertical: 4 * scale),
+      decoration: BoxDecoration(
+        color: const Color(0xFF444444),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(16 * scale),
+          bottomRight: Radius.circular(7 * scale),
+        ),
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(0, 2),
+            blurRadius: 4,
+            color: Colors.black.withValues(alpha: 0.15),
           ),
         ],
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: GoogleFonts.inter(
+          fontSize: 13 * scale,
+          fontWeight: FontWeight.w500, // ozroq qalinroq aniq ko'rinishi uchun
+          color: AppColors.textPrimary.withValues(alpha: 0.8), // yorqinroq
+        ),
       ),
     );
   }

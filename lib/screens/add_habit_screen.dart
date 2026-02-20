@@ -91,23 +91,6 @@ class AddHabitScreen extends StatelessWidget {
         alignment: Alignment.centerLeft,
         children: [
           Positioned(
-            left: 16 * scale,
-            child: GestureDetector(
-              onTap: () {
-                // Back navigation logic if needed
-              },
-              child: SvgPicture.asset(
-                'assets/icons/arrow_back_icon.svg',
-                width: 24 * scale,
-                height: 24 * scale,
-                 colorFilter: const ColorFilter.mode(
-                    Colors.white,
-                    BlendMode.srcIn,
-                 ),
-              ),
-            ),
-          ),
-          Positioned(
              left: 52 * scale,
              child: Text(
                "Habbit qo’shish",

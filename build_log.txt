@@ -1,0 +1,232 @@
+[  +16 ms] executing: uname -m
+[   +5 ms] Exit code 0 from: uname -m
+[        ] x86_64
+[   +7 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] executing: [/home/khan/development/flutter/] git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[   +4 ms] Exit code 0 from: git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[        ] 2026-02-12 17:12:32 -0800
+[   +7 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +19 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[   +4 ms] Skipping pub get: version match.
+[  +40 ms] Found plugin path_provider at /home/khan/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+[   +3 ms] Found plugin path_provider_windows at /home/khan/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+[   +5 ms] Found plugin path_provider_linux at /home/khan/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+[   +2 ms] Found plugin path_provider_foundation at /home/khan/.pub-cache/hosted/pub.dev/path_provider_foundation-2.6.0/
+[   +8 ms] Found plugin path_provider_android at /home/khan/.pub-cache/hosted/pub.dev/path_provider_android-2.2.22/
+[  +55 ms] Found plugin path_provider at /home/khan/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+[        ] Found plugin path_provider_windows at /home/khan/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+[   +3 ms] Found plugin path_provider_linux at /home/khan/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+[   +1 ms] Found plugin path_provider_foundation at /home/khan/.pub-cache/hosted/pub.dev/path_provider_foundation-2.6.0/
+[   +5 ms] Found plugin path_provider_android at /home/khan/.pub-cache/hosted/pub.dev/path_provider_android-2.2.22/
+[  +10 ms] Skipping generating web_plugin_registrant.dart because it is up-to-date.
+[  +14 ms] Found plugin path_provider at /home/khan/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+[        ] Found plugin path_provider_windows at /home/khan/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+[   +1 ms] Found plugin path_provider_linux at /home/khan/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+[        ] Found plugin path_provider_foundation at /home/khan/.pub-cache/hosted/pub.dev/path_provider_foundation-2.6.0/
+[   +4 ms] Found plugin path_provider_android at /home/khan/.pub-cache/hosted/pub.dev/path_provider_android-2.2.22/
+[   +4 ms] Generating /home/khan/Desktop/habit_tracker/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+[   +2 ms] Skipping generating GeneratedPluginRegistrant.java because it is up-to-date.
+[   +2 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[        ] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[        ] Skipping generating generated_plugins.cmake because it is up-to-date.
+[        ] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[        ] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[        ] Skipping generating generated_plugins.cmake because it is up-to-date.
+[        ] Skipping generating GeneratedPluginRegistrant.h because it is up-to-date.
+[        ] Skipping generating GeneratedPluginRegistrant.m because it is up-to-date.
+[        ] Skipping generating GeneratedPluginRegistrant.swift because it is up-to-date.
+[  +50 ms] 
+           ┌─ New feature ────────────────────────────────────────────────────────────────────────────┐
+           │   WebAssembly compilation is new. Understand the details before deploying to production. │
+           │   See https://flutter.dev/to/wasm for more information.                                  │
+           └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+[  +25 ms] Found plugin path_provider at /home/khan/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+[        ] Found plugin path_provider_windows at /home/khan/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+[   +1 ms] Found plugin path_provider_linux at /home/khan/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+[   +1 ms] Found plugin path_provider_foundation at /home/khan/.pub-cache/hosted/pub.dev/path_provider_foundation-2.6.0/
+[   +3 ms] Found plugin path_provider_android at /home/khan/.pub-cache/hosted/pub.dev/path_provider_android-2.2.22/
+[   +3 ms] generated_plugin_registrant.dart not found. Skipping.
+[        ] Compiling lib/main.dart for the Web...
+[   +2 ms] Initializing file store
+[   +2 ms] Done initializing file store
+[  +28 ms] Skipping target: web_entrypoint
+[   +1 ms] invalidated build due to missing files: /home/khan/Desktop/habit_tracker/web/*/index.html, /home/khan/Desktop/habit_tracker/web/flutter_bootstrap.js
+[        ] Skipping target: dart_build
+[        ] Skipping target: gen_localizations
+[   +1 ms] web_templated_files: Starting due to {InvalidatedReasonKind.outputMissing: The following outputs were missing: /home/khan/Desktop/habit_tracker/build/web/*/index.html, InvalidatedReasonKind.inputMissing: The following inputs were missing: /home/khan/Desktop/habit_tracker/web/*/index.html,/home/khan/Desktop/habit_tracker/web/flutter_bootstrap.js}
+[        ] web_static_assets: Starting due to {InvalidatedReasonKind.outputMissing: The following outputs were missing: /home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/flutter.js,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/skwasm.js,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/skwasm_heavy.js.symbols,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/canvaskit.js.symbols,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/wimp.js,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/canvaskit.wasm,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/chromium/canvaskit.js.symbols,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/chromium/canvaskit.wasm,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/chromium/canvaskit.js,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/wimp.wasm,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/skwasm_heavy.js,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/skwasm.js.symbols,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/wimp.js.symbols,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/skwasm_heavy.wasm,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/skwasm.wasm,/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/canvaskit/canvaskit.js}
+[ +255 ms] web_static_assets: Complete
+[   +1 ms] dart2wasm: Starting due to {}
+[   +3 ms] executing: /home/khan/development/flutter/bin/cache/dart-sdk/bin/dart compile wasm --packages=/home/khan/Desktop/habit_tracker/.dart_tool/package_config.json --extra-compiler-option=--platform=/home/khan/development/flutter/bin/cache/flutter_web_sdk/kernel/dart2wasm_platform.dill -Ddart.vm.profile=false -Ddart.vm.product=true --extra-compiler-option=--delete-tostring-package-uri=dart:ui --extra-compiler-option=--delete-tostring-package-uri=package:flutter --extra-compiler-option=--import-shared-memory --extra-compiler-option=--shared-memory-max-pages=32768 -DFLUTTER_VERSION=3.41.1 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=582a0e7c55 -DFLUTTER_ENGINE_REVISION=3452d735bd -DFLUTTER_DART_VERSION=3.11.0 -DFLUTTER_WEB_USE_SKIA=false -DFLUTTER_WEB_USE_SKWASM=true -DFLUTTER_WEB_CANVASKIT_URL=https://www.gstatic.com/flutter-canvaskit/3452d735bd38224ef2db85ca763d862d6326b17f/ --extra-compiler-option=--depfile=/home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/dart2wasm.d -O2 --strip-wasm --no-source-maps --minify -o /home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/main.dart.wasm /home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/main.dart
+[        ] dart2js: Starting due to {InvalidatedReasonKind.buildKeyChanged: The target build key changed., InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: /home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/main.dart.js}
+[        ] executing: /home/khan/development/flutter/bin/cache/dart-sdk/bin/dart compile js --platform-binaries=/home/khan/development/flutter/bin/cache/flutter_web_sdk/kernel --invoker=flutter_tool -Ddart.vm.product=true -DFLUTTER_VERSION=3.41.1 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=582a0e7c55 -DFLUTTER_ENGINE_REVISION=3452d735bd -DFLUTTER_DART_VERSION=3.11.0 -DFLUTTER_WEB_USE_SKIA=true -DFLUTTER_WEB_USE_SKWASM=false -DFLUTTER_WEB_CANVASKIT_URL=https://www.gstatic.com/flutter-canvaskit/3452d735bd38224ef2db85ca763d862d6326b17f/ --native-null-assertions --no-source-maps -O4 --minify -o /home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/app.dill --packages=/home/khan/Desktop/habit_tracker/.dart_tool/package_config.json --cfe-only /home/khan/Desktop/habit_tracker/.dart_tool/flutter_build/6b91c57a7090d9aa0059492bbf04ad0c/main.dart
+[  +27 ms] web_templated_files: Complete
+[+6197 ms] lib/screens/add_habit_screen.dart:93:17: Error: Expected ']' before this.
+                       left: 52 * scale,
+                           ^
+           lib/screens/add_habit_screen.dart:93:13: Error: The getter 'left' isn't defined for the type 'AddHabitScreen'.
+            - 'AddHabitScreen' is from 'package:habit_tracker/screens/add_habit_screen.dart' ('lib/screens/add_habit_screen.dart').
+           Try correcting the name to the name of an existing getter, or defining a getter or field named 'left'.
+                       left: 52 * scale,
+                       ^^^^
+           lib/screens/history_screen.dart:200:13: Error: No named parameter with the name 'left'.
+                       left: 52 * scale,
+                       ^^^^
+           ../../development/flutter/packages/flutter/lib/src/widgets/basic.dart:4704:9: Context: Found this candidate, but the arguments don't match.
+             const Stack({
+                   ^^^^^
+           lib/screens/history_screen.dart:211:9: Error: Expected an identifier, but got ']'.
+           Try inserting an identifier before ']'.
+                   ],
+                   ^
+           lib/screens/history_screen.dart:211:9: Error: Expected ')' before this.
+                   ],
+                   ^
+           lib/screens/history_screen.dart:186:21: Error: Too many positional arguments: 0 allowed, but 1 found.
+           Try removing the extra positional arguments.
+               return Container(
+                               ^
+           ../../development/flutter/packages/flutter/lib/src/widgets/container.dart:255:3: Context: Found this candidate, but the arguments don't match.
+             Container({
+             ^^^^^^^^^
+           lib/screens/history_screen.dart:212:7: Error: Expected ';' after this.
+                 ),
+                 ^
+           lib/screens/history_screen.dart:212:8: Error: Expected an identifier, but got ','.
+           Try inserting an identifier before ','.
+                 ),
+                  ^
+           lib/screens/history_screen.dart:212:8: Error: Unexpected token ';'.
+                 ),
+                  ^
+           lib/screens/history_screen.dart:213:5: Error: Expected an identifier, but got ')'.
+           Try inserting an identifier before ')'.
+               );
+               ^
+           lib/screens/history_screen.dart:212:8: Error: Expected ';' after this.
+                 ),
+                  ^
+           lib/screens/history_screen.dart:213:5: Error: Unexpected token ';'.
+               );
+               ^
+[ +759 ms] lib/screens/add_habit_screen.dart:93:17:
+           Error: Expected ']' before this.
+                       left: 52 * scale,
+                           ^
+           lib/screens/add_habit_screen.dart:93:13:
+           Error: The getter 'left' isn't defined for the type 'AddHabitScreen'.
+            - 'AddHabitScreen' is from 'package:habit_tracker/screens/add_habit_screen.dart' ('lib/screens/add_habit_screen.dart').
+                       left: 52 * scale,
+                       ^^^^
+           lib/screens/history_screen.dart:200:13:
+           Error: No named parameter with the name 'left'.
+                       left: 52 * scale,
+                       ^^^^
+           ../../development/flutter/packages/flutter/lib/src/widgets/basic.dart:4704:9:
+           Info: Found this candidate, but the arguments don't match.
+             const Stack({
+                   ^^^^^
+           lib/screens/history_screen.dart:211:9:
+           Error: Expected an identifier, but got ']'.
+                   ],
+                   ^
+           lib/screens/history_screen.dart:211:9:
+           Error: Expected ')' before this.
+                   ],
+                   ^
+           lib/screens/history_screen.dart:186:21:
+           Error: Too many positional arguments: 0 allowed, but 1 found.
+               return Container(
+                               ^
+           ../../development/flutter/packages/flutter/lib/src/widgets/container.dart:255:3:
+           Info: Found this candidate, but the arguments don't match.
+             Container({
+             ^^^^^^^^^
+           lib/screens/history_screen.dart:212:7:
+           Error: Expected ';' after this.
+                 ),
+                 ^
+           lib/screens/history_screen.dart:212:8:
+           Error: Expected an identifier, but got ','.
+                 ),
+                  ^
+           lib/screens/history_screen.dart:212:8:
+           Error: Unexpected token ';'.
+                 ),
+                  ^
+           lib/screens/history_screen.dart:213:5:
+           Error: Expected an identifier, but got ')'.
+               );
+               ^
+           lib/screens/history_screen.dart:212:8:
+           Error: Expected ';' after this.
+                 ),
+                  ^
+           lib/screens/history_screen.dart:213:5:
+           Error: Unexpected token ';'.
+               );
+               ^
+           Error: Compilation failed.
+[        ] Persisting file store
+[   +5 ms] Done persisting file store
+[   +1 ms] Compiling lib/main.dart for the Web... (completed in 7.3s)
+[        ] "flutter web" took 7,588ms.
+[        ] Running 1 shutdown hook
+[        ] Shutdown hooks complete
+[ +190 ms] exiting with code 1

@@ -40,10 +40,33 @@ class ProfileScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         // Avatar Section - Dumbbell shape (Figma 178:2956)
-                        SvgPicture.asset(
-                          'assets/images/avatar_frame_connected.svg',
+                        SizedBox(
                           width: 147 * scale,
                           height: 64 * scale,
+                          child: Stack(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/avatar_frame_connected.svg',
+                                width: 147 * scale,
+                                height: 64 * scale,
+                              ),
+                              // Faqat chap tarafdagi logotip qismi (64x64 maydon)
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                bottom: 0,
+                                width: 64 * scale,
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                     // Ekranni to'liq yopib, home_screen ga barcha stacklarni tozalab chiqish
+                                     Navigator.of(context).popUntil((route) => route.isFirst);
+                                  },
+                                  child: const SizedBox.expand(),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         // Gap to reach Name (Figma Top: 140).
                         SizedBox(height: 16 * scale),
@@ -143,20 +166,24 @@ class ProfileScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16 * scale),
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: SvgPicture.asset(
-              'assets/icons/arrow_back_icon.svg',
-              width: 24 * scale,
-              height: 24 * scale,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
-                BlendMode.srcIn,
+            // Bosish maydonini (hitbox) kengaytirish uchun: 
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16 * scale, vertical: 10 * scale),
+              child: SvgPicture.asset(
+                'assets/icons/arrow_back_icon.svg',
+                width: 24 * scale,
+                height: 24 * scale,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),
-          SizedBox(width: 12 * scale),
+          SizedBox(width: 2 * scale),
           Text(
             "Profile",
             style: GoogleFonts.inter(
