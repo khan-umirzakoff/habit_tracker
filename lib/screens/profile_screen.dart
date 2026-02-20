@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
+import 'history_screen.dart';
+import 'add_habit_screen.dart';
+import 'onboarding_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -59,8 +62,10 @@ class ProfileScreen extends StatelessWidget {
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                     // Ekranni to'liq yopib, home_screen ga barcha stacklarni tozalab chiqish
-                                     Navigator.of(context).popUntil((route) => route.isFirst);
+                                    // Ekranni to'liq yopib, home_screen ga barcha stacklarni tozalab chiqish
+                                    Navigator.of(
+                                      context,
+                                    ).popUntil((route) => route.isFirst);
                                   },
                                   child: const SizedBox.expand(),
                                 ),
@@ -96,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                         // Gap to reach Logout
                         SizedBox(height: 7 * scale),
                         // Logout Button
-                        _buildLogoutButton(scale),
+                        _buildLogoutButton(context, scale),
                         // Gap to reach Menu
                         SizedBox(height: 35 * scale),
                         // Menu
@@ -114,44 +119,52 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLogoutButton(double scale) {
-    return Container(
-      width: 104 * scale,
-      height: 42 * scale,
-      decoration: BoxDecoration(
-        color: const Color(0xFF222222),
-        borderRadius: BorderRadius.circular(100 * scale),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            left: 3 * scale,
-            top: 3 * scale,
-            child: Container(
-              width: 98 * scale,
-              height: 36 * scale,
-              decoration: BoxDecoration(
-                color: const Color(0xFF333333),
-                borderRadius: BorderRadius.circular(100 * scale),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.logout, color: Colors.white, size: 16 * scale),
-                  SizedBox(width: 4 * scale),
-                  Text(
-                    "Chiqish",
-                    style: GoogleFonts.inter(
-                      fontSize: 15 * scale,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+  Widget _buildLogoutButton(BuildContext context, double scale) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+          (route) => false,
+        );
+      },
+      child: Container(
+        width: 104 * scale,
+        height: 42 * scale,
+        decoration: BoxDecoration(
+          color: const Color(0xFF222222),
+          borderRadius: BorderRadius.circular(100 * scale),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 3 * scale,
+              top: 3 * scale,
+              child: Container(
+                width: 98 * scale,
+                height: 36 * scale,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF333333),
+                  borderRadius: BorderRadius.circular(100 * scale),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.logout, color: Colors.white, size: 16 * scale),
+                    SizedBox(width: 4 * scale),
+                    Text(
+                      "Chiqish",
+                      style: GoogleFonts.inter(
+                        fontSize: 15 * scale,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -160,18 +173,19 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 60 * scale,
-      decoration: const BoxDecoration(
-        color: Colors.transparent,
-      ),
+      decoration: const BoxDecoration(color: Colors.transparent),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            // Bosish maydonini (hitbox) kengaytirish uchun: 
+            // Bosish maydonini (hitbox) kengaytirish uchun:
             behavior: HitTestBehavior.opaque,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16 * scale, vertical: 10 * scale),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16 * scale,
+                vertical: 10 * scale,
+              ),
               child: SvgPicture.asset(
                 'assets/icons/arrow_back_icon.svg',
                 width: 24 * scale,
@@ -214,49 +228,97 @@ class _ProfileMenuWidget extends StatelessWidget {
         color: const Color(0xFF222222),
         borderRadius: BorderRadius.circular(22 * scale),
         border: Border.all(
-          color: Colors.white.withOpacity(0.05),
+          color: Colors.white.withValues(alpha: 0.05),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withValues(alpha: 0.25),
             blurRadius: 10,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildMenuItem("Barcha Habbitlarim", scale),
+          _buildMenuItem(
+            context: context,
+            text: "Barcha Habbitlarim",
+            scale: scale,
+            onTap: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const HistoryScreen()));
+            },
+          ),
           SizedBox(height: 4 * scale),
-          _buildMenuItem("Eng sara ko’rsatkichlar", scale),
+          _buildMenuItem(
+            context: context,
+            text: "Eng sara ko’rsatkichlar",
+            scale: scale,
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Bu bo‘lim keyingi bosqichda ulanadi'),
+                ),
+              );
+            },
+          ),
           SizedBox(height: 4 * scale),
-          _buildMenuItem("Eng yomon ko’rsatkichlar", scale),
+          _buildMenuItem(
+            context: context,
+            text: "Eng yomon ko’rsatkichlar",
+            scale: scale,
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Bu bo‘lim keyingi bosqichda ulanadi'),
+                ),
+              );
+            },
+          ),
           SizedBox(height: 4 * scale),
-          _buildMenuItem("Habbit qo’shish", scale),
+          _buildMenuItem(
+            context: context,
+            text: "Habbit qo’shish",
+            scale: scale,
+            onTap: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const AddHabitScreen()));
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildMenuItem(String text, double scale) {
-    return Container(
-      width: double.infinity,
-      height: 52 * scale,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(18 * scale),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: GoogleFonts.inter(
-          fontSize: 17 * scale,
-          fontWeight: FontWeight.w400,
-          height: 1.193,
-          color: Colors.white.withOpacity(0.7),
+  Widget _buildMenuItem({
+    required BuildContext context,
+    required String text,
+    required double scale,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 52 * scale,
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(18 * scale),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(
+            fontSize: 17 * scale,
+            fontWeight: FontWeight.w400,
+            height: 1.193,
+            color: Colors.white.withValues(alpha: 0.7),
+          ),
         ),
       ),
     );
