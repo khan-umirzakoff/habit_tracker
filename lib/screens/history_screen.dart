@@ -1,17 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../api/api_client.dart';
+import '../data/habit_view_mapper.dart';
 import '../theme/app_colors.dart';
 import '../widgets/habit_card.dart';
-import '../data/habit_mock_data.dart';
 import 'single_habit_screen.dart';
-import 'dart:math' as math;
 
-class HistoryScreen extends StatelessWidget {
+class HistoryScreen extends StatefulWidget {
   final VoidCallback? onBack;
   final bool showBackButton;
 
   const HistoryScreen({super.key, this.onBack, this.showBackButton = false});
+
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
+  bool _loading = true;
+  String? _error;
+  List<HabitViewData> _habits = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHabits();
+  }
+
+  Future<void> _loadHabits() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final apiHabits = await ApiClient.instance.getHabits(
+        date: DateTime.now(),
+      );
+      if (!mounted) return;
+      setState(() {
+        _habits = apiHabits.map(HabitViewData.fromApi).toList();
+      });
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = e.message;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _error = 'Serverga ulanishda xatolik';
+      });
+    } finally {
+      if (mounted) {
+        setState(() => _loading = false);
+      }
+    }
+  }
+
+  void _openHabit(HabitViewData habit) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SingleHabitScreen(
+          habitName: habit.description,
+          description: habit.description,
+          percentText: habit.percentText,
+          percentColor: habit.percentColor,
+          daysText: habit.daysText,
+          daysColor: habit.daysColor,
+          missedText: habit.missedText,
+          missedColor: habit.missedColor,
+          hasMissedDouble: habit.hasMissedDouble,
+          progressFillWidth: habit.progressFillWidth,
+          progressGradient: habit.progressGradient,
+          totalDays: habit.totalDays,
+          currentDay: habit.currentDay,
+          startDate: habit.startDate,
+          endDate: habit.endDate,
+          calendarColors: habit.calendarColors,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,181 +100,58 @@ class HistoryScreen extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.symmetric(vertical: 20 * scale),
                 children: [
-                  // Card 1
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SingleHabitScreen(
-                            habitName:
-                                "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                            description:
-                                "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                            percentText: '67%',
-                            percentColor: const Color(0xFFFEBB64),
-                            daysText: '40d',
-                            daysColor: const Color(0xFF9BDA88),
-                            missedText: '-2d',
-                            missedColor: const Color(0xFFDA6157),
-                            hasMissedDouble: true,
-                            progressFillWidth: 120,
-                            progressGradient: const [
-                              Color(0xFF9BDA88),
-                              Color(0xFFFF7124),
-                            ],
-                            totalDays: '60 day',
-                            currentDay: '18',
-                            startDate: '9.11.2025',
-                            endDate: '9.1.2026',
-                            calendarColors: HabitMockData.card1CalendarColors,
-                          ),
-                        ),
-                      );
-                    },
-                    child: HabitCard(
-                      scale: scale,
-                      description:
-                          "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                      percentText: '67%',
-                      percentColor: const Color(0xFFFEBB64),
-                      daysText: '40d',
-                      daysColor: const Color(0xFF9BDA88),
-                      missedText: '-2d',
-                      missedColor: const Color(0xFFDA6157),
-                      hasMissedDouble: true,
-                      progressFillWidth: 120,
-                      progressGradient: const [
-                        Color(0xFF9BDA88),
-                        Color(0xFFFF7124),
-                      ],
-                      totalDays: '60 day',
-                      currentDay: '18',
-                      startDate: '9.11.2025',
-                      endDate: '9.1.2026',
-                      calendarColors: HabitMockData.card1CalendarColors,
-                      showCalendar: false,
+                  if (_loading && _habits.isEmpty)
+                    const Center(child: CircularProgressIndicator()),
+                  if (_error != null && _habits.isEmpty) ...[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20 * scale),
+                      child: Text(
+                        _error!,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(color: Colors.white70),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20 * scale),
-
-                  // Card 2
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SingleHabitScreen(
-                            habitName:
-                                "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                            description:
-                                "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                            percentText: '44%',
-                            percentColor: const Color(0xFFD2D2D2),
-                            daysText: '8d',
-                            daysColor: const Color(0xFF88ADDA),
-                            missedText: '0',
-                            missedColor: Colors.transparent,
-                            hasMissedDouble: false,
-                            progressFillWidth: 73,
-                            progressGradient: const [
-                              Color(0xFF88ADDA),
-                              Color(0xFFD2D2D2),
-                            ],
-                            totalDays: '20',
-                            currentDay: '12',
-                            startDate: '7.12.2025',
-                            endDate: '27.12.2026',
-                            calendarColors: HabitMockData.card2CalendarColors,
-                          ),
-                        ),
-                      );
-                    },
-                    child: HabitCard(
-                      scale: scale,
-                      description:
-                          "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                      percentText: '44%',
-                      percentColor: const Color(0xFFD2D2D2),
-                      daysText: '8d',
-                      daysColor: const Color(0xFF88ADDA),
-                      missedText: '0',
-                      missedColor: Colors.transparent,
-                      hasMissedDouble: false,
-                      progressFillWidth: 73,
-                      progressGradient: const [
-                        Color(0xFF88ADDA),
-                        Color(0xFFD2D2D2),
-                      ],
-                      totalDays: '20',
-                      currentDay: '12',
-                      startDate: '7.12.2025',
-                      endDate: '27.12.2026',
-                      calendarColors: HabitMockData.card2CalendarColors,
-                      showCalendar: false,
+                    SizedBox(height: 12 * scale),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: _loadHabits,
+                        child: const Text('Qayta urinish'),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20 * scale),
-
-                  // Card 3
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SingleHabitScreen(
-                            habitName:
-                                "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                            description:
-                                "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                            percentText: '57%',
-                            percentColor: const Color(0xFFCB5B84),
-                            daysText: '4d',
-                            daysColor: const Color(0xFFB488DA),
-                            missedText: '-1d',
-                            missedColor: const Color(0xFFDA6157),
-                            hasMissedDouble: true,
-                            progressFillWidth: 98,
-                            progressGradient: const [
-                              Color(0xFF88ADDA),
-                              Color(0xFFCB5B84),
-                            ],
-                            totalDays: '7 day',
-                            currentDay: '3',
-                            startDate: '17.12.2025',
-                            endDate: '24.12.2026',
-                            calendarColors: HabitMockData.card3CalendarColors,
-                          ),
-                        ),
-                      );
-                    },
-                    child: HabitCard(
-                      scale: scale,
-                      description:
-                          "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-                      percentText: '57%',
-                      percentColor: const Color(0xFFCB5B84),
-                      daysText: '4d',
-                      daysColor: const Color(0xFFB488DA),
-                      missedText: '-1d',
-                      missedColor: const Color(0xFFDA6157),
-                      hasMissedDouble: true,
-                      progressFillWidth: 98,
-                      progressGradient: const [
-                        Color(0xFF88ADDA),
-                        Color(0xFFCB5B84),
-                      ],
-                      totalDays: '7 day',
-                      currentDay: '3',
-                      startDate: '17.12.2025',
-                      endDate: '24.12.2026',
-                      calendarColors: HabitMockData.card3CalendarColors,
-                      showCalendar: false,
+                  ],
+                  if (!_loading && _error == null && _habits.isEmpty)
+                    Center(
+                      child: Text(
+                        "Hozircha habbit yo‘q",
+                        style: GoogleFonts.inter(color: Colors.white70),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 100 * scale,
-                  ), // Bottom padding for nav bar overlap
+                  for (final habit in _habits) ...[
+                    GestureDetector(
+                      onTap: () => _openHabit(habit),
+                      child: HabitCard(
+                        scale: scale,
+                        description: habit.description,
+                        percentText: habit.percentText,
+                        percentColor: habit.percentColor,
+                        daysText: habit.daysText,
+                        daysColor: habit.daysColor,
+                        missedText: habit.missedText,
+                        missedColor: habit.missedColor,
+                        hasMissedDouble: habit.hasMissedDouble,
+                        progressFillWidth: habit.progressFillWidth,
+                        progressGradient: habit.progressGradient,
+                        totalDays: habit.totalDays,
+                        currentDay: habit.currentDay,
+                        startDate: habit.startDate,
+                        endDate: habit.endDate,
+                        calendarColors: habit.calendarColors,
+                        showCalendar: false,
+                      ),
+                    ),
+                    SizedBox(height: 20 * scale),
+                  ],
+                  SizedBox(height: 100 * scale),
                 ],
               ),
             ),
@@ -227,13 +176,13 @@ class HistoryScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (!showBackButton) SizedBox(width: 52 * scale),
-          if (showBackButton)
+          if (!widget.showBackButton) SizedBox(width: 52 * scale),
+          if (widget.showBackButton)
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                if (onBack != null) {
-                  onBack!();
+                if (widget.onBack != null) {
+                  widget.onBack!();
                 } else {
                   Navigator.pop(context);
                 }

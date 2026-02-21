@@ -28,6 +28,18 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  Widget _buildCurrentScreen() {
+    switch (_currentIndex) {
+      case 1:
+        return const AddHabitScreen();
+      case 2:
+        return HistoryScreen(onBack: () => _onTabTapped(0));
+      case 0:
+      default:
+        return const HomeScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // We use a Stack to float the Bottom Bar over the content
@@ -47,15 +59,7 @@ class _MainScreenState extends State<MainScreen> {
       resizeToAvoidBottomInset: false, // Standard for nav based apps
       body: Stack(
         children: [
-          // Screens
-          IndexedStack(
-            index: _currentIndex,
-            children: [
-              const HomeScreen(),
-              const AddHabitScreen(),
-              HistoryScreen(onBack: () => _onTabTapped(0)),
-            ],
-          ),
+          Positioned.fill(child: _buildCurrentScreen()),
 
           // Floating Bottom Nav Bar
           Positioned(

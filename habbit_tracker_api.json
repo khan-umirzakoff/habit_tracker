@@ -1,0 +1,1181 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Habbit Tracker API",
+    "version": "1.0.0",
+    "description": "API documentation for the Habbit Tracker project."
+  },
+  "paths": {
+    "/api/auth/google/": {
+      "post": {
+        "operationId": "auth_google_create",
+        "tags": [
+          "auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleAuth"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleAuth"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleAuth"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          },
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/auth/login/": {
+      "post": {
+        "operationId": "auth_login_create",
+        "tags": [
+          "auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          },
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/auth/refresh/": {
+      "post": {
+        "operationId": "auth_refresh_create",
+        "description": "Takes a refresh type JSON web token and returns an access type JSON web\ntoken if the refresh token is valid.",
+        "tags": [
+          "auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenRefresh"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenRefresh"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenRefresh"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenRefresh"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/banner/": {
+      "get": {
+        "operationId": "banner_retrieve",
+        "tags": [
+          "banner"
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          },
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Banner"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/habbit-daily-statuses/": {
+      "get": {
+        "operationId": "habbit_daily_statuses_list",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "habbit_id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by habbit id.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by month 1-12 (defaults to current month)."
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by year (defaults to current year)."
+          }
+        ],
+        "tags": [
+          "habbit-daily-statuses"
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HabbitDailyStatus"
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/habbit-daily-statuses/{id}/": {
+      "put": {
+        "operationId": "habbit_daily_statuses_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique integer value identifying this habbit daily status.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "habbit-daily-statuses"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HabbitDailyStatus"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/HabbitDailyStatus"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/HabbitDailyStatus"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HabbitDailyStatus"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "operationId": "habbit_daily_statuses_partial_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique integer value identifying this habbit daily status.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "habbit-daily-statuses"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedHabbitDailyStatus"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedHabbitDailyStatus"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedHabbitDailyStatus"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HabbitDailyStatus"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/habbits/": {
+      "get": {
+        "operationId": "habbits_list",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by month 1-12 (defaults to current month)."
+          },
+          {
+            "in": "query",
+            "name": "rank",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "best",
+                "worst"
+              ]
+            },
+            "description": "Ranking filter: all (default), best, worst."
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by year (defaults to current year)."
+          }
+        ],
+        "tags": [
+          "habbits"
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Habbit"
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "habbits_create",
+        "tags": [
+          "habbits"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Habbit"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Habbit"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Habbit"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Habbit"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/habbits/{id}/": {
+      "get": {
+        "operationId": "habbits_retrieve",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique integer value identifying this habbit.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by month 1-12 (defaults to current month)."
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by year (defaults to current year)."
+          }
+        ],
+        "tags": [
+          "habbits"
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Habbit"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "operationId": "habbits_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique integer value identifying this habbit.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "habbits"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Habbit"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Habbit"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Habbit"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Habbit"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "operationId": "habbits_partial_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique integer value identifying this habbit.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "habbits"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedHabbit"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedHabbit"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedHabbit"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Habbit"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "habbits_destroy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique integer value identifying this habbit.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "habbits"
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/api/habbits/progress/": {
+      "get": {
+        "operationId": "habbits_progress_retrieve",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Target date in YYYY-MM-DD format (defaults to today)."
+          }
+        ],
+        "tags": [
+          "habbits"
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HabbitProgress"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/user/me/": {
+      "get": {
+        "operationId": "user_me_retrieve",
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUser"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "first_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "photo": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "email",
+          "id"
+        ]
+      },
+      "Banner": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "image": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "image",
+          "title"
+        ]
+      },
+      "ColorEnum": {
+        "enum": [
+          "light-green",
+          "orange",
+          "red",
+          "light-blue",
+          "light-gray",
+          "purple",
+          "pink"
+        ],
+        "type": "string",
+        "description": "* `light-green` - Light Green\n* `orange` - Orange\n* `red` - Red\n* `light-blue` - Light Blue\n* `light-gray` - Light Gray\n* `purple` - Purple\n* `pink` - Pink"
+      },
+      "GoogleAuth": {
+        "type": "object",
+        "properties": {
+          "id_token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id_token"
+        ]
+      },
+      "Habbit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "duration": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": 0
+          },
+          "from_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "to_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "daily_statuses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HabbitDailyStatusList"
+            },
+            "readOnly": true
+          },
+          "percentage_is_completed": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true,
+            "default": 0.0
+          },
+          "successful_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "failed_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "half_failed_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "remaining_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "passed_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "color": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ColorEnum"
+              }
+            ],
+            "description": "Choices: light-green=Light Green, orange=Orange, red=Red, light-blue=Light Blue, light-gray=Light Gray, purple=Purple, pink=Pink.\n\n* `light-green` - Light Green\n* `orange` - Orange\n* `red` - Red\n* `light-blue` - Light Blue\n* `light-gray` - Light Gray\n* `purple` - Purple\n* `pink` - Pink"
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IconEnum"
+              }
+            ],
+            "description": "Choices: work=Briefcase (Work), music=Music note (Music), heart=Heart (Love/Health), energy=Lightning (Energy/Power), navigation=Compass (Navigation), translate=Translate / Language, fashion=T-shirt (Clothing/Fashion), video=Video camera (Video), youtube=YouTube / Play, sports=Sports ball (Sports), people_add=Person + (Add contact/People), browser=Browser window (Web), driving=Car (Driving).\n\n* `work` - Briefcase (Work)\n* `music` - Music note (Music)\n* `heart` - Heart (Love/Health)\n* `energy` - Lightning (Energy/Power)\n* `navigation` - Compass (Navigation)\n* `translate` - Translate / Language\n* `fashion` - T-shirt (Clothing/Fashion)\n* `video` - Video camera (Video)\n* `youtube` - YouTube / Play\n* `sports` - Sports ball (Sports)\n* `people_add` - Person + (Add contact/People)\n* `browser` - Browser window (Web)\n* `driving` - Car (Driving)"
+          }
+        },
+        "required": [
+          "color",
+          "daily_statuses",
+          "failed_days",
+          "from_date",
+          "half_failed_days",
+          "icon",
+          "id",
+          "passed_days",
+          "percentage_is_completed",
+          "remaining_days",
+          "successful_days",
+          "title"
+        ]
+      },
+      "HabbitDailyStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "habbit": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ],
+            "description": "Choices: -1=Failed, 0=Pending, 1=Half Finished, 2=Finished.\n\n* `-1` - Failed\n* `0` - Pending\n* `1` - Half Finished\n* `2` - Finished"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "date",
+          "habbit",
+          "id",
+          "status"
+        ]
+      },
+      "HabbitDailyStatusList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ],
+            "description": "Choices: -1=Failed, 0=Pending, 1=Half Finished, 2=Finished.\n\n* `-1` - Failed\n* `0` - Pending\n* `1` - Half Finished\n* `2` - Finished"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "date",
+          "id",
+          "status"
+        ]
+      },
+      "HabbitProgress": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "total_habbits": {
+            "type": "integer"
+          },
+          "completed_habbits": {
+            "type": "integer"
+          },
+          "completion_percent": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "completed_habbits",
+          "completion_percent",
+          "date",
+          "total_habbits"
+        ]
+      },
+      "IconEnum": {
+        "enum": [
+          "work",
+          "music",
+          "heart",
+          "energy",
+          "navigation",
+          "translate",
+          "fashion",
+          "video",
+          "youtube",
+          "sports",
+          "people_add",
+          "browser",
+          "driving"
+        ],
+        "type": "string",
+        "description": "* `work` - Briefcase (Work)\n* `music` - Music note (Music)\n* `heart` - Heart (Love/Health)\n* `energy` - Lightning (Energy/Power)\n* `navigation` - Compass (Navigation)\n* `translate` - Translate / Language\n* `fashion` - T-shirt (Clothing/Fashion)\n* `video` - Video camera (Video)\n* `youtube` - YouTube / Play\n* `sports` - Sports ball (Sports)\n* `people_add` - Person + (Add contact/People)\n* `browser` - Browser window (Web)\n* `driving` - Car (Driving)"
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "writeOnly": true
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "PatchedHabbit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "duration": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": 0
+          },
+          "from_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "to_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "daily_statuses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HabbitDailyStatusList"
+            },
+            "readOnly": true
+          },
+          "percentage_is_completed": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true,
+            "default": 0.0
+          },
+          "successful_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "failed_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "half_failed_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "remaining_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "passed_days": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "color": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ColorEnum"
+              }
+            ],
+            "description": "Choices: light-green=Light Green, orange=Orange, red=Red, light-blue=Light Blue, light-gray=Light Gray, purple=Purple, pink=Pink.\n\n* `light-green` - Light Green\n* `orange` - Orange\n* `red` - Red\n* `light-blue` - Light Blue\n* `light-gray` - Light Gray\n* `purple` - Purple\n* `pink` - Pink"
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IconEnum"
+              }
+            ],
+            "description": "Choices: work=Briefcase (Work), music=Music note (Music), heart=Heart (Love/Health), energy=Lightning (Energy/Power), navigation=Compass (Navigation), translate=Translate / Language, fashion=T-shirt (Clothing/Fashion), video=Video camera (Video), youtube=YouTube / Play, sports=Sports ball (Sports), people_add=Person + (Add contact/People), browser=Browser window (Web), driving=Car (Driving).\n\n* `work` - Briefcase (Work)\n* `music` - Music note (Music)\n* `heart` - Heart (Love/Health)\n* `energy` - Lightning (Energy/Power)\n* `navigation` - Compass (Navigation)\n* `translate` - Translate / Language\n* `fashion` - T-shirt (Clothing/Fashion)\n* `video` - Video camera (Video)\n* `youtube` - YouTube / Play\n* `sports` - Sports ball (Sports)\n* `people_add` - Person + (Add contact/People)\n* `browser` - Browser window (Web)\n* `driving` - Car (Driving)"
+          }
+        }
+      },
+      "PatchedHabbitDailyStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "habbit": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ],
+            "description": "Choices: -1=Failed, 0=Pending, 1=Half Finished, 2=Finished.\n\n* `-1` - Failed\n* `0` - Pending\n* `1` - Half Finished\n* `2` - Finished"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "readOnly": true
+          }
+        }
+      },
+      "StatusEnum": {
+        "enum": [
+          -1,
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "description": "* `-1` - Failed\n* `0` - Pending\n* `1` - Half Finished\n* `2` - Finished"
+      },
+      "TokenPair": {
+        "type": "object",
+        "properties": {
+          "access": {
+            "type": "string"
+          },
+          "refresh": {
+            "type": "string"
+          },
+          "token_type": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/AuthUser"
+          }
+        },
+        "required": [
+          "access",
+          "refresh",
+          "token_type",
+          "user"
+        ]
+      },
+      "TokenRefresh": {
+        "type": "object",
+        "properties": {
+          "access": {
+            "type": "string",
+            "readOnly": true
+          },
+          "refresh": {
+            "type": "string",
+            "writeOnly": true
+          }
+        },
+        "required": [
+          "access",
+          "refresh"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "sessionid"
+      },
+      "jwtAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

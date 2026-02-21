@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../api/api_client.dart';
 import '../widgets/neumorphic_input.dart';
 
 class AddHabitScreen extends StatefulWidget {
@@ -40,12 +41,37 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     'app',
     'transport',
   ];
+  final List<String> _colorApiEnums = const [
+    'light-green',
+    'orange',
+    'red',
+    'light-blue',
+    'light-gray',
+    'purple',
+    'pink',
+  ];
+  final List<String> _iconApiEnums = const [
+    'work',
+    'music',
+    'heart',
+    'energy',
+    'navigation',
+    'translate',
+    'fashion',
+    'video',
+    'youtube',
+    'sports',
+    'people_add',
+    'browser',
+    'driving',
+  ];
 
   int? _selectedDuration;
   DateTime? _startDate;
   DateTime? _endDate;
   int _selectedColorIndex = 0;
   int _selectedIconIndex = 0;
+  bool _saving = false;
 
   @override
   void dispose() {
@@ -121,6 +147,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   }
 
   void _resetForm() {
+    if (_saving) return;
     setState(() {
       _titleController.clear();
       _selectedDuration = null;
@@ -134,7 +161,9 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     ).showSnackBar(const SnackBar(content: Text('Forma tozalandi')));
   }
 
-  void _saveHabit() {
+  Future<void> _saveHabit() async {
+    if (_saving) return;
+
     final title = _titleController.text.trim();
     if (title.isEmpty) {
       ScaffoldMessenger.of(
@@ -143,14 +172,21 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
       return;
     }
 
-    if (_selectedDuration == null || _startDate == null || _endDate == null) {
+    if (_selectedDuration == null || _startDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Davomiylik va sanalarni tanlang')),
+        const SnackBar(
+          content: Text('Davomiylik va boshlanish sanasini tanlang'),
+        ),
       );
       return;
     }
 
-    if (_endDate!.isBefore(_startDate!)) {
+    final toDate =
+        _endDate ??
+        _startDate!.add(
+          Duration(days: (_selectedDuration! - 1).clamp(0, 9999)),
+        );
+    if (toDate.isBefore(_startDate!)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -161,13 +197,44 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '"$title" saqlandi (demo). API ulanganda backendga yuboramiz.',
-        ),
-      ),
-    );
+    setState(() => _saving = true);
+    try {
+      await ApiClient.instance.createHabit(
+        title: title,
+        duration: _selectedDuration!,
+        fromDate: _startDate!,
+        toDate: toDate,
+        color: _colorApiEnums[_selectedColorIndex],
+        icon: _iconApiEnums[_selectedIconIndex],
+      );
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Habbit API orqali saqlandi')),
+      );
+      setState(() {
+        _titleController.clear();
+        _selectedDuration = null;
+        _startDate = null;
+        _endDate = null;
+        _selectedColorIndex = 0;
+        _selectedIconIndex = 0;
+      });
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Saqlash xatosi: ${e.message}')));
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Serverga ulanishda xatolik')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _saving = false);
+      }
+    }
   }
 
   @override
@@ -574,15 +641,19 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
             text: "Bekor qilish",
             color: const Color(0xFFCA5555),
             onTap: _resetForm,
+            enabled: !_saving,
           ),
         ),
         SizedBox(width: 3 * scale),
         Expanded(
           child: _buildDoubleLayerButton(
             scale: scale,
-            text: "Saqlash",
+            text: _saving ? "Saqlanmoqda..." : "Saqlash",
             color: const Color(0xFF9BDA88),
-            onTap: _saveHabit,
+            onTap: () {
+              _saveHabit();
+            },
+            enabled: !_saving,
           ),
         ),
       ],
@@ -594,36 +665,40 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     required String text,
     required Color color,
     required VoidCallback onTap,
+    required bool enabled,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 60 * scale,
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(18 * scale),
-        ),
-        padding: EdgeInsets.all(4 * scale),
+    return Opacity(
+      opacity: enabled ? 1 : 0.7,
+      child: GestureDetector(
+        onTap: enabled ? onTap : null,
         child: Container(
+          height: 60 * scale,
           decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(14 * scale),
+            color: color.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(18 * scale),
           ),
-          alignment: Alignment.center,
-          child: Text(
-            text,
-            style: GoogleFonts.inter(
-              fontSize: 17 * scale,
-              fontWeight: FontWeight.w500,
-              height: 1.193,
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                  offset: const Offset(0, 1),
-                  blurRadius: 1,
-                  color: Colors.black.withValues(alpha: 0.45),
-                ),
-              ],
+          padding: EdgeInsets.all(4 * scale),
+          child: Container(
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(14 * scale),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              text,
+              style: GoogleFonts.inter(
+                fontSize: 17 * scale,
+                fontWeight: FontWeight.w500,
+                height: 1.193,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    offset: const Offset(0, 1),
+                    blurRadius: 1,
+                    color: Colors.black.withValues(alpha: 0.45),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

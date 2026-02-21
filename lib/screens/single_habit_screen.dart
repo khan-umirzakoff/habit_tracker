@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import '../widgets/habit_card.dart';
-import 'dart:math' as math;
 
 class SingleHabitScreen extends StatelessWidget {
   // Habit Name (Description) for Header
@@ -94,10 +93,10 @@ class SingleHabitScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.background,
         border: Border(
-           bottom: BorderSide(
-             color: Colors.white.withValues(alpha: 0.05),
-             width: 1,
-           ),
+          bottom: BorderSide(
+            color: Colors.white.withValues(alpha: 0.05),
+            width: 1,
+          ),
         ),
       ),
       child: Row(
@@ -107,31 +106,34 @@ class SingleHabitScreen extends StatelessWidget {
             onTap: () => Navigator.pop(context),
             behavior: HitTestBehavior.opaque,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16 * scale, vertical: 10 * scale),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16 * scale,
+                vertical: 10 * scale,
+              ),
               child: SvgPicture.asset(
                 'assets/icons/arrow_back_icon.svg',
                 width: 24 * scale,
                 height: 24 * scale,
-                 colorFilter: const ColorFilter.mode(
-                    Colors.white,
-                    BlendMode.srcIn,
-                 ),
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),
           SizedBox(width: 2 * scale),
           Expanded(
             child: Text(
-               habitName,
-               maxLines: 1,
-               overflow: TextOverflow.ellipsis,
-               style: GoogleFonts.inter(
-                  fontSize: 17 * scale,
-                  fontWeight: FontWeight.w600,
-                  height: 1.193,
-                  color: const Color(0xFFDBD8D3),
-               ),
-             ),
+              habitName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.inter(
+                fontSize: 17 * scale,
+                fontWeight: FontWeight.w600,
+                height: 1.193,
+                color: const Color(0xFFDBD8D3),
+              ),
+            ),
           ),
           SizedBox(width: 16 * scale),
         ],

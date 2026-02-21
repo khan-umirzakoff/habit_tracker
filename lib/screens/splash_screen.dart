@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../theme/app_colors.dart';
 import 'onboarding_screen.dart';
+import 'main_screen.dart';
+import '../api/auth_session.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,20 +25,22 @@ class _SplashScreenState extends State<SplashScreen>
 
     // 1. Setup Animation Controller (2 seconds duration for "slow appearance")
     _controller = AnimationController(
-         vsync: this,
-         duration: const Duration(seconds: 2),
-       );
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
 
     // 2. Define Animations
     // Fade from 0 to 1
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
     // Scale from 0.8 to 1.0 (subtle zoom in)
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 0.8,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
 
     // 3. Start Animation
     _controller.forward();
@@ -46,10 +50,14 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const OnboardingScreen(),
-            transitionsBuilder: (_, animation, __, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                AuthSession.isLoggedIn
+                ? const MainScreen()
+                : const OnboardingScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
             transitionDuration: const Duration(milliseconds: 800),
           ),
         );

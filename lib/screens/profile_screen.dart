@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../api/api_client.dart';
 import '../theme/app_colors.dart';
 import 'history_screen.dart';
 import 'add_habit_screen.dart';
@@ -122,10 +123,13 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildLogoutButton(BuildContext context, double scale) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-          (route) => false,
-        );
+        ApiClient.instance.logout().then((_) {
+          if (!context.mounted) return;
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+            (route) => false,
+          );
+        });
       },
       child: Container(
         width: 104 * scale,

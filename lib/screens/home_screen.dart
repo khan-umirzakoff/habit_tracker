@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../api/api_client.dart';
+import '../data/habit_view_mapper.dart';
 import '../theme/app_colors.dart';
 import '../widgets/habit_card.dart';
-import '../data/habit_mock_data.dart';
 import 'profile_screen.dart';
 import 'single_habit_screen.dart';
 
-/// Figma "1-page" — node 178:3013
-/// Frame: 390×1860 (scrollable), fill: #333333
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,71 +18,53 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DateTime _selectedDate = DateTime.now();
+  bool _loading = true;
+  String? _error;
+  List<HabitViewData> _habits = const [];
 
-  static final List<_HomeHabitData> _habits = [
-    _HomeHabitData(
-      description:
-          "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-      percentText: '67%',
-      percentColor: Color(0xFFFEBB64),
-      daysText: '40d',
-      daysColor: Color(0xFF9BDA88),
-      missedText: '-2d',
-      missedColor: Color(0xFFDA6157),
-      hasMissedDouble: true,
-      progressFillWidth: 120,
-      progressGradient: [Color(0xFF9BDA88), Color(0xFFFF7124)],
-      totalDays: '60 day',
-      currentDay: '18',
-      startDate: '9.11.2025',
-      endDate: '9.1.2026',
-      calendarColors: HabitMockData.card1CalendarColors,
-    ),
-    _HomeHabitData(
-      description:
-          "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-      percentText: '44%',
-      percentColor: Color(0xFFD2D2D2),
-      daysText: '8d',
-      daysColor: Color(0xFF88ADDA),
-      missedText: '0',
-      missedColor: Colors.transparent,
-      hasMissedDouble: false,
-      progressFillWidth: 73,
-      progressGradient: [Color(0xFF88ADDA), Color(0xFFD2D2D2)],
-      totalDays: '20',
-      currentDay: '12',
-      startDate: '7.12.2025',
-      endDate: '27.12.2026',
-      calendarColors: HabitMockData.card2CalendarColors,
-    ),
-    _HomeHabitData(
-      description:
-          "Har kuni eng kamida 2.5 km ga yugurish, motivatsiya - ozish. 97 kg edim.",
-      percentText: '57%',
-      percentColor: Color(0xFFCB5B84),
-      daysText: '4d',
-      daysColor: Color(0xFFB488DA),
-      missedText: '-1d',
-      missedColor: Color(0xFFDA6157),
-      hasMissedDouble: true,
-      progressFillWidth: 98,
-      progressGradient: [Color(0xFF88ADDA), Color(0xFFCB5B84)],
-      totalDays: '7 day',
-      currentDay: '3',
-      startDate: '17.12.2025',
-      endDate: '24.12.2026',
-      calendarColors: HabitMockData.card3CalendarColors,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadHabits();
+  }
 
-  void _changeDate(int delta) {
+  Future<void> _loadHabits() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final apiHabits = await ApiClient.instance.getHabits(date: _selectedDate);
+      final mapped = apiHabits.map(HabitViewData.fromApi).toList();
+      if (!mounted) return;
+      setState(() {
+        _habits = mapped;
+      });
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = e.message;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _error = 'Serverga ulanishda xatolik';
+      });
+    } finally {
+      if (mounted) {
+        setState(() => _loading = false);
+      }
+    }
+  }
+
+  Future<void> _changeDate(int delta) async {
     setState(() {
       _selectedDate = _selectedDate.add(Duration(days: delta));
     });
+    await _loadHabits();
   }
 
-  void _openHabit(_HomeHabitData habit) {
+  void _openHabit(HabitViewData habit) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => SingleHabitScreen(
@@ -125,10 +107,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return '${date.day} ${months[date.month - 1]}';
   }
 
+  double _avgProgress() {
+    if (_habits.isEmpty) return 0;
+    final sum = _habits.fold<double>(0, (acc, h) {
+      final numeric = double.tryParse(h.percentText.replaceAll('%', '')) ?? 0;
+      return acc + numeric;
+    });
+    return (sum / _habits.length).clamp(0, 100);
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final scale = screenWidth / 390;
+    final avg = _avgProgress();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -218,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(width: 4 * scale),
                 Text(
-                  '83%',
+                  '${avg.round()}%',
                   style: GoogleFonts.inter(
                     fontSize: 15 * scale,
                     fontWeight: FontWeight.w600,
@@ -230,95 +222,92 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             SizedBox(height: 12 * scale),
-            _HomeProgressBar(percentage: 0.83, scale: scale),
+            _HomeProgressBar(percentage: avg / 100, scale: scale),
             SizedBox(height: 16 * scale),
-            GestureDetector(
-              onTap: () => _openHabit(_habits[0]),
-              child: HabitCard(
-                scale: scale,
-                description: _habits[0].description,
-                percentText: _habits[0].percentText,
-                percentColor: _habits[0].percentColor,
-                daysText: _habits[0].daysText,
-                daysColor: _habits[0].daysColor,
-                missedText: _habits[0].missedText,
-                missedColor: _habits[0].missedColor,
-                hasMissedDouble: _habits[0].hasMissedDouble,
-                progressFillWidth: _habits[0].progressFillWidth,
-                progressGradient: _habits[0].progressGradient,
-                totalDays: _habits[0].totalDays,
-                currentDay: _habits[0].currentDay,
-                startDate: _habits[0].startDate,
-                endDate: _habits[0].endDate,
-                calendarColors: _habits[0].calendarColors,
-              ),
-            ),
-            SizedBox(height: 20 * scale),
-            Container(
-              width: 230 * scale,
-              height: 2 * scale,
-              decoration: BoxDecoration(
-                color: AppColors.textPrimary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(30 * scale),
-              ),
-            ),
-            SizedBox(height: 20 * scale),
-            GestureDetector(
-              onTap: () => _openHabit(_habits[1]),
-              child: HabitCard(
-                scale: scale,
-                description: _habits[1].description,
-                percentText: _habits[1].percentText,
-                percentColor: _habits[1].percentColor,
-                daysText: _habits[1].daysText,
-                daysColor: _habits[1].daysColor,
-                missedText: _habits[1].missedText,
-                missedColor: _habits[1].missedColor,
-                hasMissedDouble: _habits[1].hasMissedDouble,
-                progressFillWidth: _habits[1].progressFillWidth,
-                progressGradient: _habits[1].progressGradient,
-                totalDays: _habits[1].totalDays,
-                currentDay: _habits[1].currentDay,
-                startDate: _habits[1].startDate,
-                endDate: _habits[1].endDate,
-                calendarColors: _habits[1].calendarColors,
-              ),
-            ),
-            SizedBox(height: 20 * scale),
-            Container(
-              width: 230 * scale,
-              height: 2 * scale,
-              decoration: BoxDecoration(
-                color: AppColors.textPrimary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(30 * scale),
-              ),
-            ),
-            SizedBox(height: 20 * scale),
-            GestureDetector(
-              onTap: () => _openHabit(_habits[2]),
-              child: HabitCard(
-                scale: scale,
-                description: _habits[2].description,
-                percentText: _habits[2].percentText,
-                percentColor: _habits[2].percentColor,
-                daysText: _habits[2].daysText,
-                daysColor: _habits[2].daysColor,
-                missedText: _habits[2].missedText,
-                missedColor: _habits[2].missedColor,
-                hasMissedDouble: _habits[2].hasMissedDouble,
-                progressFillWidth: _habits[2].progressFillWidth,
-                progressGradient: _habits[2].progressGradient,
-                totalDays: _habits[2].totalDays,
-                currentDay: _habits[2].currentDay,
-                startDate: _habits[2].startDate,
-                endDate: _habits[2].endDate,
-                calendarColors: _habits[2].calendarColors,
-              ),
-            ),
+            _buildBody(scale),
             SizedBox(height: 100 * scale),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBody(double scale) {
+    if (_loading && _habits.isEmpty) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 40 * scale),
+        child: const CircularProgressIndicator(),
+      );
+    }
+
+    if (_error != null && _habits.isEmpty) {
+      return Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24 * scale),
+            child: Text(
+              _error!,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: Colors.white70,
+                fontSize: 14 * scale,
+              ),
+            ),
+          ),
+          SizedBox(height: 12 * scale),
+          ElevatedButton(
+            onPressed: _loadHabits,
+            child: const Text('Qayta urinish'),
+          ),
+        ],
+      );
+    }
+
+    if (_habits.isEmpty) {
+      return Text(
+        "Hozircha habbit yo‘q",
+        style: GoogleFonts.inter(color: Colors.white70, fontSize: 15 * scale),
+      );
+    }
+
+    return Column(
+      children: [
+        for (int i = 0; i < _habits.length; i++) ...[
+          GestureDetector(
+            onTap: () => _openHabit(_habits[i]),
+            child: HabitCard(
+              scale: scale,
+              description: _habits[i].description,
+              percentText: _habits[i].percentText,
+              percentColor: _habits[i].percentColor,
+              daysText: _habits[i].daysText,
+              daysColor: _habits[i].daysColor,
+              missedText: _habits[i].missedText,
+              missedColor: _habits[i].missedColor,
+              hasMissedDouble: _habits[i].hasMissedDouble,
+              progressFillWidth: _habits[i].progressFillWidth,
+              progressGradient: _habits[i].progressGradient,
+              totalDays: _habits[i].totalDays,
+              currentDay: _habits[i].currentDay,
+              startDate: _habits[i].startDate,
+              endDate: _habits[i].endDate,
+              calendarColors: _habits[i].calendarColors,
+            ),
+          ),
+          if (i < _habits.length - 1) ...[
+            SizedBox(height: 20 * scale),
+            Container(
+              width: 230 * scale,
+              height: 2 * scale,
+              decoration: BoxDecoration(
+                color: AppColors.textPrimary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(30 * scale),
+              ),
+            ),
+            SizedBox(height: 20 * scale),
+          ],
+        ],
+      ],
     );
   }
 
@@ -422,6 +411,7 @@ class _HomeProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final safePercentage = percentage.clamp(0.0, 1.0);
     return SizedBox(
       width: 230 * scale,
       height: 62 * scale,
@@ -449,7 +439,7 @@ class _HomeProgressBar extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    width: (230 * percentage) * scale,
+                    width: (230 * safePercentage) * scale,
                     height: 2 * scale,
                     decoration: BoxDecoration(
                       color: const Color(0xFF9BDA88),
@@ -464,40 +454,4 @@ class _HomeProgressBar extends StatelessWidget {
       ),
     );
   }
-}
-
-class _HomeHabitData {
-  final String description;
-  final String percentText;
-  final Color percentColor;
-  final String daysText;
-  final Color daysColor;
-  final String missedText;
-  final Color missedColor;
-  final bool hasMissedDouble;
-  final double progressFillWidth;
-  final List<Color> progressGradient;
-  final String totalDays;
-  final String currentDay;
-  final String startDate;
-  final String endDate;
-  final List<Color> calendarColors;
-
-  const _HomeHabitData({
-    required this.description,
-    required this.percentText,
-    required this.percentColor,
-    required this.daysText,
-    required this.daysColor,
-    required this.missedText,
-    required this.missedColor,
-    required this.hasMissedDouble,
-    required this.progressFillWidth,
-    required this.progressGradient,
-    required this.totalDays,
-    required this.currentDay,
-    required this.startDate,
-    required this.endDate,
-    required this.calendarColors,
-  });
 }
