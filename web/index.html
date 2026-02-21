@@ -32,6 +32,31 @@
   <title>habit_tracker</title>
   <link rel="manifest" href="manifest.json">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    (function initTelegramWebApp() {
+      try {
+        const tg = window.Telegram && window.Telegram.WebApp;
+        if (!tg) return;
+
+        tg.ready && tg.ready();
+        tg.disableVerticalSwipes && tg.disableVerticalSwipes();
+        tg.expand && tg.expand();
+
+        // Optional diagnostics in devtools.
+        if (typeof tg.version !== "undefined") {
+          console.log("Telegram WebApp version:", tg.version);
+        }
+        if (typeof tg.isVerticalSwipesEnabled !== "undefined") {
+          console.log(
+            "Telegram vertical swipes enabled:",
+            tg.isVerticalSwipesEnabled
+          );
+        }
+      } catch (e) {
+        console.warn("Telegram WebApp init skipped:", e);
+      }
+    })();
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
