@@ -55,9 +55,9 @@ class AnimatedBottomNavBar extends StatelessWidget {
           // So logic: Row with MainAxisAlignment.center (or specific padding).
           // Gap: 2px.
           // Items: AnimatedContainer(duration: 300ms, width: isActive ? 100 : 52).
-
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, // or SpaceEvenly with small details
+            mainAxisAlignment:
+                MainAxisAlignment.center, // or SpaceEvenly with small details
             children: [
               _buildNavItem(
                 index: 0,
@@ -70,7 +70,8 @@ class AnimatedBottomNavBar extends StatelessWidget {
               _buildNavItem(
                 index: 1,
                 iconPath: 'assets/icons/plus_icon.svg',
-                label: 'Add', // Or whatever "Habbit" or "New"? User said "+ Add". Figma has icon. I'll use "Add".
+                label:
+                    'Add', // Or whatever "Habbit" or "New"? User said "+ Add". Figma has icon. I'll use "Add".
                 scale: scale,
                 isSelected: currentIndex == 1,
                 isPlus: true, // Special styling for plus icon?
@@ -110,24 +111,30 @@ class AnimatedBottomNavBar extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: AppColors.textPrimary.withValues(alpha: 0.1), // fill_8HYCYF 10% opacity
+          color: AppColors.textPrimary.withValues(
+            alpha: 0.1,
+          ), // fill_8HYCYF 10% opacity
           borderRadius: BorderRadius.circular(1000),
-       ),
-       child: SingleChildScrollView(
-         scrollDirection: Axis.horizontal,
-         physics: const NeverScrollableScrollPhysics(),
-         child: Container(
-           width: width, // Constraint text layout
-           padding: EdgeInsets.symmetric(horizontal: isSelected ? 0 : 0), // Centering handled by alignment
-           height: height,
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             children: [
+        ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const NeverScrollableScrollPhysics(),
+          child: Container(
+            width: width, // Constraint text layout
+            padding: EdgeInsets.symmetric(
+              horizontal: isSelected ? 0 : 0,
+            ), // Centering handled by alignment
+            height: height,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
                 // Icon
                 Opacity(
-                  opacity: isSelected ? 1.0 : 0.4, // Inactive items have 0.4 opacity in Figma for Calendar?
-                  // Home active: 1.0. Add/Cal inactive? 
+                  opacity: isSelected
+                      ? 1.0
+                      : 0.4, // Inactive items have 0.4 opacity in Figma for Calendar?
+                  // Home active: 1.0. Add/Cal inactive?
                   // Figma Home Active: Home(1.0), Add(1.0?), Cal(0.4).
                   // Let's assume standard behavior: Selected=1.0, Unselected=0.4 (unless it's the Plus button which might be distinct).
                   // Plus button in Figma (178:3304) -> Group 48100455 (Image SVG). Opacity?
@@ -142,17 +149,17 @@ class AnimatedBottomNavBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 // Text (Only if selected)
                 if (isSelected) ...[
                   SizedBox(width: 4 * scale), // Gap 4px
-                  // Use Flexible to prevent overflow during animation? 
+                  // Use Flexible to prevent overflow during animation?
                   // Or just Text. The AnimatedContainer clips content usually? No.
                   // SingleChildScrollView with NeverScrollable should handle clipping if width is small?
                   // Actually the conditional 'if (isSelected)' causes a jump if inserted immediately.
                   // Better to use AnimatedOpacity + Align/Size/Row.
                   // But for "silliq" (smooth), simpler is often better:
-                  // The container expands, and text appears. 
+                  // The container expands, and text appears.
                   // Let's just use the if(isSelected) for now, as 300ms is fast.
                   // Scale width first, then text appears?
                   Text(
@@ -165,10 +172,10 @@ class AnimatedBottomNavBar extends StatelessWidget {
                     ),
                   ),
                 ],
-             ],
-           ),
-         ),
-       ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

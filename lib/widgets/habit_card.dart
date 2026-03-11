@@ -289,7 +289,10 @@ class HabitCard extends StatelessWidget {
   // ===========================
   Widget _buildDateBadge({required double scale, required String text}) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10 * scale, vertical: 4 * scale),
+      padding: EdgeInsets.symmetric(
+        horizontal: 10 * scale,
+        vertical: 4 * scale,
+      ),
       decoration: BoxDecoration(
         color: const Color(0xFF444444),
         borderRadius: BorderRadius.only(
@@ -390,7 +393,8 @@ class _StatRingPainter extends CustomPainter {
     final strokeWidth = size.width * 0.15;
 
     final paintBg = Paint()
-      ..color = Colors.white.withValues(alpha: 0.1) // 10% opacity white bg
+      ..color = Colors.white
+          .withValues(alpha: 0.1) // 10% opacity white bg
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 

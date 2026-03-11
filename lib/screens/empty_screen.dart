@@ -61,10 +61,7 @@ class _EmptyScreenState extends State<EmptyScreen> {
 
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 55 * scale),
-            child: SizedBox(
-              height: 60 * scale,
-              child: _buildDateNavRow(scale),
-            ),
+            child: SizedBox(height: 60 * scale, child: _buildDateNavRow(scale)),
           ),
 
           // === CONTENT COLUMN (text + stats + illustration) ===
@@ -89,7 +86,6 @@ class _EmptyScreenState extends State<EmptyScreen> {
           ),
 
           SizedBox(height: 12 * scale), // column gap: 12
-
           // === STATS ROW ===
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +111,9 @@ class _EmptyScreenState extends State<EmptyScreen> {
                 child: Text(
                   '0 Habits',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodySemiBold.copyWith(fontSize: 15 * scale),
+                  style: AppTextStyles.bodySemiBold.copyWith(
+                    fontSize: 15 * scale,
+                  ),
                 ),
               ),
               SizedBox(width: 4 * scale),
@@ -127,7 +125,6 @@ class _EmptyScreenState extends State<EmptyScreen> {
           ),
 
           SizedBox(height: 12 * scale), // column gap: 12
-
           // === EMPTY ILLUSTRATION ===
           // Figma: w:230, h:62
           SvgPicture.asset(
@@ -329,7 +326,9 @@ class _EmptyScreenState extends State<EmptyScreen> {
               width: 100 * scale,
               height: 52 * scale,
               decoration: BoxDecoration(
-                color: AppColors.textPrimary.withValues(alpha: 0.1), // white 10%
+                color: AppColors.textPrimary.withValues(
+                  alpha: 0.1,
+                ), // white 10%
                 borderRadius: BorderRadius.circular(1000),
               ),
               child: Row(
@@ -349,7 +348,9 @@ class _EmptyScreenState extends State<EmptyScreen> {
                   // "Home" — style_FLT4KI: w500, 15px
                   Text(
                     'Home',
-                    style: AppTextStyles.navLabel.copyWith(fontSize: 15 * scale),
+                    style: AppTextStyles.navLabel.copyWith(
+                      fontSize: 15 * scale,
+                    ),
                   ),
                 ],
               ),

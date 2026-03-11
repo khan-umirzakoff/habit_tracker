@@ -6,6 +6,7 @@ class HabitViewData {
   final int id;
   final String description;
   final String percentText;
+  final double numericPercent; // Added for performance optimization
   final Color percentColor;
   final String daysText;
   final Color daysColor;
@@ -24,6 +25,7 @@ class HabitViewData {
     required this.id,
     required this.description,
     required this.percentText,
+    required this.numericPercent,
     required this.percentColor,
     required this.daysText,
     required this.daysColor,
@@ -55,6 +57,8 @@ class HabitViewData {
       id: habit.id,
       description: habit.title.isEmpty ? 'Untitled habit' : habit.title,
       percentText: '${(percent * 100).round()}%',
+      numericPercent:
+          percent * 100, // Pre-calculate to avoid string parsing in render loop
       percentColor: _percentColor(primaryColor),
       daysText: '${habit.successfulDays}d',
       daysColor: primaryColor,

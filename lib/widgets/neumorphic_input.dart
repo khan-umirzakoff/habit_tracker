@@ -28,18 +28,17 @@ class NeumorphicInputContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: pressedColor,
         borderRadius: BorderRadius.circular(borderRadius),
-        border: Border.all(
-          color: const Color(0xFF353535),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF353535), width: 2),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(borderRadius - 2), // Adjust for border
+        borderRadius: BorderRadius.circular(
+          borderRadius - 2,
+        ), // Adjust for border
         child: CustomPaint(
           foregroundPainter: _InnerShadowPainter(
-             radius: borderRadius - 2,
-             shadowColorTop: shadowColorTop,
-             shadowColorBottom: shadowColorBottom,
+            radius: borderRadius - 2,
+            shadowColorTop: shadowColorTop,
+            shadowColorBottom: shadowColorBottom,
           ),
           child: child,
         ),
@@ -74,24 +73,35 @@ class _InnerShadowPainter extends CustomPainter {
     // "inset 2px 3px" -> Shadow on Top/Left (dark). Light from Bottom/Right.
     // "inset -1px -2px" -> Shadow on Bottom/Right (light). Light from Top/Left.
     // Let's implement generic inner shadow drawer.
-    
-    _drawShadow(canvas, rect, rrect, 
-       offset: const Offset(2, 3), 
-       blur: 4, 
-       color: shadowColorBottom); // Dark shadow
 
-     _drawShadow(canvas, rect, rrect, 
-       offset: const Offset(-1, -2), 
-       blur: 4, 
-       color: shadowColorTop); // Light shadow
+    _drawShadow(
+      canvas,
+      rect,
+      rrect,
+      offset: const Offset(2, 3),
+      blur: 4,
+      color: shadowColorBottom,
+    ); // Dark shadow
+
+    _drawShadow(
+      canvas,
+      rect,
+      rrect,
+      offset: const Offset(-1, -2),
+      blur: 4,
+      color: shadowColorTop,
+    ); // Light shadow
 
     canvas.restore();
   }
 
-  void _drawShadow(Canvas canvas, Rect rect, RRect rrect, {
-    required Offset offset, 
-    required double blur, 
-    required Color color
+  void _drawShadow(
+    Canvas canvas,
+    Rect rect,
+    RRect rrect, {
+    required Offset offset,
+    required double blur,
+    required Color color,
   }) {
     // Create a path that is the "inverse" of the rrect.
     // We make a very large rect around the canvas, and subtract the rrect.
@@ -100,23 +110,23 @@ class _InnerShadowPainter extends CustomPainter {
       ..fillType = PathFillType.evenOdd
       ..addRect(outerRect)
       ..addRRect(rrect);
-      
+
     // Shift it by -offset so the shadow falls into the hole correctly?
     // No, paint "elevation" shadow.
     // Standard approach:
     // Draw the "inverse" shape. Then the shadow of that inverse shape will fall *inside* the hole.
     // To shift the shadow by `offset`, we shift the inverse shape by `offset`.
-    
+
     canvas.save();
     canvas.translate(offset.dx, offset.dy);
-    
+
     final paint = Paint()
       ..color = color
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, blur); // standard blur
-      
+
     // Draw the holey path
     canvas.drawPath(dirtyPath, paint);
-    
+
     canvas.restore();
   }
 

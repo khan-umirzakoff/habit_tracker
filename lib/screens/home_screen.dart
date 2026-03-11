@@ -109,10 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double _avgProgress() {
     if (_habits.isEmpty) return 0;
-    final sum = _habits.fold<double>(0, (acc, h) {
-      final numeric = double.tryParse(h.percentText.replaceAll('%', '')) ?? 0;
-      return acc + numeric;
-    });
+    // Optimization: Directly sum the pre-calculated numericPercent
+    // instead of repeatedly parsing a formatted string (like '50%').
+    // This reduces CPU overhead and GC pressure on every render frame.
+    final sum = _habits.fold<double>(0, (acc, h) => acc + h.numericPercent);
     return (sum / _habits.length).clamp(0, 100);
   }
 
